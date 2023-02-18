@@ -2,11 +2,22 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from '../Header/Header'
 
-class App extends Component {
-  state = {
-    // optional second annotation for better type inference
-    count: 0,
-  };
+type MyProps = {
+
+}
+
+type MyState = {
+  city: string;
+  cities: string[];
+  url: string;
+}
+
+class App extends Component<MyProps, MyState> {
+  state: MyState = {
+    city: '',
+    cities: [],
+    url: ''
+  }
 
   render() {
     return (
