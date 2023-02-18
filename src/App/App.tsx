@@ -1,14 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 import Header from '../Header/Header'
 
-function App() {
-  return (
-    <main>
-      <Header />
-    </main>
-  );
+class App extends Component {
+  state = {
+    // optional second annotation for better type inference
+    count: 0,
+  };
+
+  render() {
+    return (
+      <main className='app'>
+        <Header />
+      </main>
+    )
+  }
 }
 
 export default App;
