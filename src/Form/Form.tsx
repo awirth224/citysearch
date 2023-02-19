@@ -51,8 +51,12 @@ class Form extends Component<MyProps, MyState> {
     }
 
     getUserOptions = (cities: []) => {
-        const allResults: string[] = cities.map(city => city["matching_full_name"])
-        return allResults
+        // const allResults: string[] = cities.map(city => city["matching_full_name"])
+        const allResults: {}[] = cities.map(city => ({
+            href: city["_links"]["city:item"]["href"],
+            fullName: city["matching_full_name"]
+        }))
+        console.log(allResults)
     }
 
     handleChange = (e: any) => {
@@ -65,14 +69,14 @@ class Form extends Component<MyProps, MyState> {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
                 // this.setState({ homeCityNames: searchedCityNames })
-                this.setState({homeCity: value, homeCityNames: searchedCityNames })
+                // this.setState({homeCity: value, homeCityNames: searchedCityNames })
             })
         } else if (name === 'desiredCity') {
            
             searchFetch(this.state.desiredCity).then(data => {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({ desiredCity:value, desiredCityNames: searchedCityNames })
+                // this.setState({ desiredCity:value, desiredCityNames: searchedCityNames })
                 
             })
         }
