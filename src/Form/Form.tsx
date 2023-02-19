@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import searchFetch from '../apicalls/allCitiesApiCall';
+import getSingleCity from "../apicalls/singleCityApiCall";
 
 type MyProps = {
     //put props here
@@ -24,6 +25,22 @@ class Form extends Component<MyProps, MyState> {
 
     handleClick = (e: any) => {
         e.preventDefault()
+        
+        const homeCityTrue = this.state.homeCityNames.find(city =>  city === this.state.homeCity)
+        const desiredCityTrue = this.state.desiredCityNames.find(city => city === this.state.desiredCity)
+        console.log('BEFORE IF',homeCityTrue)
+
+        if(homeCityTrue) {
+            getSingleCity(homeCityTrue)
+            .then((data)=>  data['_embedded']['city:search-results'][0]['_links']['city:item'])
+        }
+   
+
+        if(desiredCityTrue) {
+            getSingleCity(desiredCityTrue)
+            .then((data) => data['_embedded']['city:search-results'][0]['_links']['city:item'])
+        }   
+       
     }
 
     getUserOptions = (cities: []) => {
@@ -74,3 +91,4 @@ class Form extends Component<MyProps, MyState> {
 }
 
 export default Form
+
