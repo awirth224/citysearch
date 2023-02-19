@@ -7,8 +7,16 @@
 */
 
 .header {
-  background-color: #0081C9 ;
+  align-items: center;
+  border-bottom: solid 10px #FFC93C;
+  display: flex;
   height: 10vh;
+  justify-content: center;
   width: 100vw;
+}
+
+.logo {
+  color:#0081C9;
+  font-size: 30px;
 }
 

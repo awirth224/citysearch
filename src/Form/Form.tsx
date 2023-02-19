@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './Form.css'
 import searchFetch from '../apicalls/allCitiesApiCall';
 import getSingleCity from "../apicalls/singleCityApiCall";
 import grabGeonameId from "../apicalls/geonameId";
@@ -86,15 +87,21 @@ class Form extends Component<MyProps, MyState> {
         const desiredDropDown = this.state.desiredCityNames.map((item, index) => <option key={index}>{item}</option>)
 
         return (
+          <div className="form">
             <form>
-                <input type='search' list='homeCityNames' autoComplete='off' name='homeCity' value={this.state.homeCity} placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='homeCityNames'>{homeDropDown}</datalist>
-
-                <input type='search' list='desiredCityNames' autoComplete='off' name='desiredCity' value={this.state.desiredCity} placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='desiredCityNames'>{desiredDropDown}</datalist>
-
-                <button onClick={(e) => this.handleClick(e)}>Search</button>
+                <div className='input-container'>
+                    <label>Current City</label>
+                    <input type='search' list='homeCityNames' autoComplete='off' name='homeCity' value={this.state.homeCity} placeholder='Enter city name' onChange={(event) => this.handleChange(event)} />
+                    <datalist id='homeCityNames'>{homeDropDown}</datalist>
+                </div>
+                <div className='input-container'>
+                    <label>Desired City</label>
+                    <input type='search' list='desiredCityNames' autoComplete='off' name='desiredCity' value={this.state.desiredCity} placeholder='Enter city name' onChange={(event) => this.handleChange(event)} />
+                    <datalist id='desiredCityNames'>{desiredDropDown}</datalist>
+                </div>
+                <button onClick={(e) => this.handleClick(e)} className='search'>Search</button>
             </form>
+          </div>
         )
     }
 }
