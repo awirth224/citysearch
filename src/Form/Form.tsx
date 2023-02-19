@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import searchFetch from '../apicalls/allCitiesApiCall';
 import getSingleCity from "../apicalls/singleCityApiCall";
 import grabGeonameId from "../apicalls/geonameId";
+import onlyFullNames from "../util/dropDown";
+import { createNamedExports } from "typescript";
 
 type MyProps = {
     //put props here
@@ -30,7 +32,6 @@ class Form extends Component<MyProps, MyState> {
         const homeCityTrue = this.state.homeCityNames.find(city =>  city === this.state.homeCity)
         const desiredCityTrue = this.state.desiredCityNames.find(city => city === this.state.desiredCity)
        
-
         if(homeCityTrue) {
             let geonameId:string; 
 
@@ -42,12 +43,10 @@ class Form extends Component<MyProps, MyState> {
             })
         }
    
-
         if(desiredCityTrue) {
             getSingleCity(desiredCityTrue)
-            .then((data) => data['_embedded']['city:search-results'][0]['_links']['city:item'])
-        }   
-       
+            .then((data) => onlyFullNames(data))
+        }    
     }
 
     getUserOptions = (cities: []) => {
@@ -62,10 +61,11 @@ class Form extends Component<MyProps, MyState> {
         if (name === 'homeCity') {
             // this.setState({ homeCity: value })
             searchFetch(this.state.homeCity).then(data => {
-                const allCities = data["_embedded"]["city:search-results"]
-                const searchedCityNames = this.getUserOptions(allCities)
+                console.log('FUNCTION', onlyFullNames(data))
+                // const allCities = data["_embedded"]["city:search-results"]
+                // const searchedCityNames = this.getUserOptions(allCities)
                 // this.setState({ homeCityNames: searchedCityNames })
-                this.setState({homeCity: value, homeCityNames: searchedCityNames })
+                // this.setState({homeCity: value, homeCityNames: searchedCityNames })
             })
         } else if (name === 'desiredCity') {
            

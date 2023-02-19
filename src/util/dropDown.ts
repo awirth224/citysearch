@@ -36,9 +36,11 @@ type Alternate = {
       count: number
       }
 
-let options: Option[]
 
-const onlyFullNames = (options: Option[]): string[] => {
 
+const onlyFullNames = (options: Option): string[] => {
+  const allNames = options.map(city => city["_embedded"]["city:search-results"][0]["matching_full_name"])
+  return allNames
 }
 
+export default onlyFullNames
