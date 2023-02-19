@@ -6,7 +6,7 @@ import '../City.jpeg'
 const Header = () => {
   return (
     <header className='header'>
-      <div className='logo'><img src="../cityIcon.png"/>CitySearch</div>
+      <div className='logo'>CitySearch</div>
     </header>
   )
 }
