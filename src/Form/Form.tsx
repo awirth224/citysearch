@@ -8,8 +8,8 @@ type MyProps = {
 type MyState = {
     homeCity: string;
     desiredCity: string;
-    cityNames: string[];
-    //desiredCityNames: string[];
+    homeCityNames: string[];
+    desiredCityNames: string[];
 }
 
 class Form extends Component<MyProps, MyState> {
@@ -17,7 +17,8 @@ class Form extends Component<MyProps, MyState> {
     state: MyState = {
         homeCity: '',
         desiredCity: '',
-        cityNames: []
+        homeCityNames: [],
+        desiredCityNames: []
     }
 
 
@@ -30,26 +31,6 @@ class Form extends Component<MyProps, MyState> {
         return allResults
     }
 
-
-    // eventChange($event: KeyboardEvent): void {
-    //     (<HTMLInputElement>$event.target).value;
-    // }
-
-    // onChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    //     this.setState({ text: e.currentTarget.value });
-    //   };
-
-    // const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setValues({ ...values, [event.target.name]: 
-    // event.target.value });
-    // };
-
-    // const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    //     setInputValue(event.target.value);
-    //   };
-
-
-    // handleChange = (e: any) => {
     handleChange = (e: any) => {
 
         const name: string = e.target.name
@@ -57,27 +38,34 @@ class Form extends Component<MyProps, MyState> {
 
         if (name === 'homeCity') {
             this.setState({ homeCity: value })
+            searchFetch(this.state.homeCity).then(data => {
+                const allCities = data["_embedded"]["city:search-results"]
+                const searchedCityNames = this.getUserOptions(allCities)
+                this.setState({ homeCityNames: searchedCityNames })
+            })
         } else if (name === 'desiredCity') {
             this.setState({ desiredCity: value })
+            searchFetch(this.state.desiredCity).then(data => {
+                const allCities = data["_embedded"]["city:search-results"]
+                const searchedCityNames = this.getUserOptions(allCities)
+                this.setState({ desiredCityNames: searchedCityNames })
+            })
         }
 
-        // searchFetch(this.state.city).then(data => {
-        //     const allCities = data["_embedded"]["city:search-results"]
-        //     const searchedCityNames = this.getUserOptions(allCities)
-        //     this.setState({ cityNames: searchedCityNames })
-        // })
+
     }
 
     render() {
-        const dropDownItems = this.state.cityNames.map((item, index) => <option key={index}>{item}</option>)
+        const homeDropDown = this.state.homeCityNames.map((item, index) => <option key={index}>{item}</option>)
+        const desiredDropDown = this.state.desiredCityNames.map((item, index) => <option key={index}>{item}</option>)
 
         return (
             <form>
-                <input type='search' list='cityNames' autoComplete='off' name='homeCity' value={this.state.homeCity} placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='cityNames'>{dropDownItems}</datalist>
+                <input type='search' list='homeCityNames' autoComplete='off' name='homeCity' value={this.state.homeCity} placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
+                <datalist id='homeCityNames'>{homeDropDown}</datalist>
 
-                <input type='search' list='cityNames' autoComplete='off' name='desiredCity' value={this.state.desiredCity} placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='cityNames'>{dropDownItems}</datalist>
+                <input type='search' list='desiredCityNames' autoComplete='off' name='desiredCity' value={this.state.desiredCity} placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
+                <datalist id='desiredCityNames'>{desiredDropDown}</datalist>
 
                 <button onClick={(e) => this.handleClick(e)}>Search</button>
             </form>
