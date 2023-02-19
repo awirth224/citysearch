@@ -24,7 +24,7 @@ class Form extends Component<MyProps, MyState> {
     }
 
 
-    handleClick = (e: any) => {
+    handleClick = (e:any) => {
         e.preventDefault()
         
         const homeCityTrue = this.state.homeCityNames.find(city =>  city === this.state.homeCity)
@@ -56,7 +56,6 @@ class Form extends Component<MyProps, MyState> {
     }
 
     handleChange = (e: any) => {
-
         const name: string = e.target.name
         const value: string = e.target.value
 
