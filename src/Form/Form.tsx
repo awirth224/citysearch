@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import searchFetch from '../apicalls/allCitiesApiCall';
 import getSingleCity from "../apicalls/singleCityApiCall";
+import grabGeonameId from "../apicalls/geonameId";
 
 type MyProps = {
     //put props here
@@ -28,11 +29,17 @@ class Form extends Component<MyProps, MyState> {
         
         const homeCityTrue = this.state.homeCityNames.find(city =>  city === this.state.homeCity)
         const desiredCityTrue = this.state.desiredCityNames.find(city => city === this.state.desiredCity)
-        console.log('BEFORE IF',homeCityTrue)
+       
 
         if(homeCityTrue) {
+            let geonameId:string; 
+
             getSingleCity(homeCityTrue)
-            .then((data)=>  data['_embedded']['city:search-results'][0]['_links']['city:item'])
+            .then((data)=> geonameId = data['_embedded']['city:search-results'][0]['_links']['city:item'])
+            .then(() =>  {
+                 grabGeonameId(geonameId)
+                    .then((data) => console.log('DID THIS WORK', data))
+            })
         }
    
 
@@ -54,18 +61,20 @@ class Form extends Component<MyProps, MyState> {
         const value: string = e.target.value
 
         if (name === 'homeCity') {
-            this.setState({ homeCity: value })
+            // this.setState({ homeCity: value })
             searchFetch(this.state.homeCity).then(data => {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({ homeCityNames: searchedCityNames })
+                // this.setState({ homeCityNames: searchedCityNames })
+                this.setState({homeCity: value, homeCityNames: searchedCityNames })
             })
         } else if (name === 'desiredCity') {
-            this.setState({ desiredCity: value })
+           
             searchFetch(this.state.desiredCity).then(data => {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({ desiredCityNames: searchedCityNames })
+                this.setState({ desiredCity:value, desiredCityNames: searchedCityNames })
+                
             })
         }
 
