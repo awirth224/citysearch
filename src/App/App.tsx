@@ -24,34 +24,19 @@ class App extends Component<MyProps, MyState> {
 
   handleClick = (e: any) => {
     e.preventDefault()
-
-
-
-    // should we fetch the city from the state now here?
-
-    // searchFetch(this.state.city).then(data => {
-    //   console.log(data)
-    //   const allCities = data["_embedded"]["city:search-results"]
-    //   this.getOptions(allCities)
-    //   this.setState({cities: allCities})
-    // })
   }
 
   getUserOptions = (cities: []) => {
     const allResults: string[] = cities.map(city => city["matching_full_name"])
-    //console.log('ALL RESULTS:', allResults)
     return allResults
   }
 
   handleChange = (e: any) => {
     console.log('event', e.target.value)
     this.setState({ city: e.target.value })
-    // const {name, value} = e.target
     searchFetch(this.state.city).then(data => {
-      //console.log(data)
       const allCities = data["_embedded"]["city:search-results"]
       const searchedCityNames = this.getUserOptions(allCities)
-      //this.setState({ cities: allCities, cityNames: searchedCityNames })
       this.setState({ cityNames: searchedCityNames })
     })
   }
