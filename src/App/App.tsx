@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from '../Header/Header'
-import { searchFetch } from '../apicalls/allCitiesApiCall';
 import Form from '../Form/Form'
-import { 
-  searchFetch,
-  getCityDetails,
-} from '../apicalls/allCitiesApiCall';
+import { getCityDetails } from '../apicalls/allCitiesApiCall';
 
 type MyProps = {
 
@@ -28,15 +24,16 @@ class App extends Component<MyProps, MyState> {
   }
 
 handleCallback = (param: string, secParam: string) => {
-  this.setState({homeURL: param, desiredURL: secParam})
-
+  this.setState({homeURL: param, desiredURL: secParam})  
+  this.getSlug(param, secParam)
 }
 
-getCitySlug = () => {
-  getCityDetails(this.state.homeURL)
-  .then(data => this.setState({ homeSlug: data['_links']['city:urban_area'].href }))
-  getCityDetails(this.state.desiredURL)
-  .then(data => this.setState({ desiredSlug: data['_links']['city:urban_area'].href }))
+getSlug = (lemon: string, lime: string) => {
+  getCityDetails(lemon)
+    .then(data => this.setState({ homeSlug: data['_links']['city:urban_area'].href }))
+
+  getCityDetails(lime)
+    .then(data => this.setState({ desiredSlug: data['_links']['city:urban_area'].href }))
 }
 
 
@@ -46,7 +43,7 @@ getCitySlug = () => {
     return (
       <main className='app'>
         <Header />
-        <Form />
+        <Form handleCallback={this.handleCallback}/>
       </main>
     )
   }

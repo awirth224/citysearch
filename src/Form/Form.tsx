@@ -8,8 +8,7 @@ import getSingleCity from "../apicalls/singleCityApiCall";
 import grabGeonameId from "../apicalls/geonameId";
 
 type MyProps = {
-    handleCallback: Function
-        
+    handleCallback: Function;       
 }
 
 type MyState = {
@@ -65,14 +64,12 @@ class Form extends Component<MyProps, MyState> {
         
         const homeCityObject = this.state.homeCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.homeCity)
         const homeCityURL = homeCityObject.href
-        MyProps.handleCallback(homeCityURL)
-       
 
         const desiredCityObject = this.state.desiredCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.desiredCity)
         const desiredCityURL = desiredCityObject.href
-        MyProps.handleCallback(desiredCityURL)
-        // getCityDetails(desiredCityURL.href)
-        //     .then(data => this.setState({ desiredURL: data['_links']['city:urban_area'].href }))
+
+        this.props.handleCallback(homeCityURL, desiredCityURL)
+
     }
 
     render() {
