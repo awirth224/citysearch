@@ -8,15 +8,17 @@ type MyProps = {
 }
 
 type MyState = {
+    cities: any;
     homeCity: string;
     desiredCity: string;
-    homeCityNames: string[];
-    desiredCityNames: string[];
+    homeCityNames: any;
+    desiredCityNames: any;
 }
 
 class Form extends Component<MyProps, MyState> {
 
     state: MyState = {
+        cities: [],
         homeCity: '',
         desiredCity: '',
         homeCityNames: [],
@@ -27,32 +29,36 @@ class Form extends Component<MyProps, MyState> {
     handleClick = (e:any) => {
         e.preventDefault()
         
-        const homeCityTrue = this.state.homeCityNames.find(city =>  city === this.state.homeCity)
-        const desiredCityTrue = this.state.desiredCityNames.find(city => city === this.state.desiredCity)
+        // const homeCityTrue = this.state.homeCityNames.find(city =>  city === this.state.homeCity)
+        // const desiredCityTrue = this.state.desiredCityNames.find(city => city === this.state.desiredCity)
        
 
-        if(homeCityTrue) {
-            let geonameId:string; 
+        // if(homeCityTrue) {
+        //     let geonameId:string; 
 
-            getSingleCity(homeCityTrue)
-            .then((data)=> geonameId = data['_embedded']['city:search-results'][0]['_links']['city:item'])
-            .then(() =>  {
-                 grabGeonameId(geonameId)
-                    .then((data) => console.log('DID THIS WORK', data))
-            })
-        }
+        //     getSingleCity(homeCityTrue)
+        //     .then((data)=> geonameId = data['_embedded']['city:search-results'][0]['_links']['city:item'])
+        //     .then(() =>  {
+        //          grabGeonameId(geonameId)
+        //             .then((data) => console.log('DID THIS WORK', data))
+        //     })
+        // }
    
 
-        if(desiredCityTrue) {
-            getSingleCity(desiredCityTrue)
-            .then((data) => data['_embedded']['city:search-results'][0]['_links']['city:item'])
-        }   
+        // if(desiredCityTrue) {
+        //     getSingleCity(desiredCityTrue)
+        //     .then((data) => data['_embedded']['city:search-results'][0]['_links']['city:item'])
+        // }   
        
     }
 
-    getUserOptions = (cities: []) => {
-        const allResults: string[] = cities.map(city => city["matching_full_name"])
-        return allResults
+    componentDidMount(): void {
+        searchFetch()
+        .then(data => {
+            const allCities = data["_embedded"]["city:search-results"]
+            const searchedCityNames = this.getUserOptions(allCities)
+            this.setState({ cities: searchedCityNames })
+        })
     }
 
     handleChange = (e: any) => {
@@ -60,37 +66,46 @@ class Form extends Component<MyProps, MyState> {
         const value: string = e.target.value
 
         if (name === 'homeCity') {
-            // this.setState({ homeCity: value })
-            searchFetch(this.state.homeCity).then(data => {
+            searchFetch(value).then(data => {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
-                // this.setState({ homeCityNames: searchedCityNames })
                 this.setState({homeCity: value, homeCityNames: searchedCityNames })
             })
         } else if (name === 'desiredCity') {
-           
-            searchFetch(this.state.desiredCity).then(data => {
+            searchFetch(value).then(data => {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({ desiredCity:value, desiredCityNames: searchedCityNames })
-                
+                this.setState({desiredCity: value, desiredCityNames: searchedCityNames })
             })
         }
+    }
 
+    getUserOptions = (cities: []) => {
+        const allResults: {}[] = cities.map(city => ({
+            href: city["_links"]["city:item"]["href"],
+            fullName: city["matching_full_name"]
+        }))
+        return allResults
+    }
 
+    switchDataList = (key: keyof MyState) => {
+        if(!this.state[key].length) {
+            const cityDropDown = this.state.cities.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
+            return cityDropDown
+        } else {
+            const updatedDropDown = this.state[key].map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
+            return updatedDropDown
+        }
     }
 
     render() {
-        const homeDropDown = this.state.homeCityNames.map((item, index) => <option key={index}>{item}</option>)
-        const desiredDropDown = this.state.desiredCityNames.map((item, index) => <option key={index}>{item}</option>)
-
         return (
             <form>
-                <input type='search' list='homeCityNames' autoComplete='off' name='homeCity' value={this.state.homeCity} placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='homeCityNames'>{homeDropDown}</datalist>
+                <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
+                <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
 
-                <input type='search' list='desiredCityNames' autoComplete='off' name='desiredCity' value={this.state.desiredCity} placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='desiredCityNames'>{desiredDropDown}</datalist>
+                <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
+                <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
 
                 <button onClick={(e) => this.handleClick(e)}>Search</button>
             </form>
