@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import './Form.css'
-import searchFetch from '../apicalls/allCitiesApiCall';
+import { 
+    searchFetch,
+    getCityDetails,
+} from '../apicalls/allCitiesApiCall';
 import getSingleCity from "../apicalls/singleCityApiCall";
 import grabGeonameId from "../apicalls/geonameId";
 
@@ -9,57 +12,23 @@ type MyProps = {
 }
 
 type MyState = {
-    cities: any;
     homeCity: string;
-    desiredCity: string;
     homeCityNames: any;
+    homeURL: string;
+    desiredCity: string;
     desiredCityNames: any;
+    desiredURL: string;
 }
 
 class Form extends Component<MyProps, MyState> {
 
     state: MyState = {
-        cities: [],
         homeCity: '',
-        desiredCity: '',
         homeCityNames: [],
-        desiredCityNames: []
-    }
-
-
-    handleClick = (e:any) => {
-        e.preventDefault()
-        
-        // const homeCityTrue = this.state.homeCityNames.find(city =>  city === this.state.homeCity)
-        // const desiredCityTrue = this.state.desiredCityNames.find(city => city === this.state.desiredCity)
-       
-
-        // if(homeCityTrue) {
-        //     let geonameId:string; 
-
-        //     getSingleCity(homeCityTrue)
-        //     .then((data)=> geonameId = data['_embedded']['city:search-results'][0]['_links']['city:item'])
-        //     .then(() =>  {
-        //          grabGeonameId(geonameId)
-        //             .then((data) => console.log('DID THIS WORK', data))
-        //     })
-        // }
-   
-
-        // if(desiredCityTrue) {
-        //     getSingleCity(desiredCityTrue)
-        //     .then((data) => data['_embedded']['city:search-results'][0]['_links']['city:item'])
-        // }   
-       
-    }
-
-    componentDidMount(): void {
-        searchFetch()
-        .then(data => {
-            const allCities = data["_embedded"]["city:search-results"]
-            const searchedCityNames = this.getUserOptions(allCities)
-            this.setState({ cities: searchedCityNames })
-        })
+        homeURL: '',
+        desiredCity: '',
+        desiredCityNames: [],
+        desiredURL: '',
     }
 
     handleChange = (e: any) => {
@@ -90,13 +59,20 @@ class Form extends Component<MyProps, MyState> {
     }
 
     switchDataList = (key: keyof MyState) => {
-        if(!this.state[key].length) {
-            const cityDropDown = this.state.cities.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
-            return cityDropDown
-        } else {
-            const updatedDropDown = this.state[key].map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
-            return updatedDropDown
-        }
+            const dropDown = this.state[key].map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
+            return dropDown
+    }
+
+    handleClick = (e:any) => {
+        e.preventDefault()
+        
+        const homeCityURL = this.state.homeCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.homeCity)
+        getCityDetails(homeCityURL.href)
+            .then(data => this.setState({ homeURL: data['_links']['city:urban_area'].href }))
+
+        const desiredCityURL = this.state.desiredCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.desiredCity)
+        getCityDetails(desiredCityURL.href)
+            .then(data => this.setState({ desiredURL: data['_links']['city:urban_area'].href }))
     }
 
     render() {
