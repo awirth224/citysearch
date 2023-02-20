@@ -12,7 +12,6 @@ type MyProps = {
 }
 
 type MyState = {
-    cities: any;
     homeCity: string;
     homeCityNames: any;
     homeURL: string;
@@ -24,22 +23,12 @@ type MyState = {
 class Form extends Component<MyProps, MyState> {
 
     state: MyState = {
-        cities: [],
         homeCity: '',
         homeCityNames: [],
         homeURL: '',
         desiredCity: '',
         desiredCityNames: [],
         desiredURL: '',
-    }
-
-    componentDidMount(): void {
-        searchFetch()
-        .then(data => {
-            const allCities = data["_embedded"]["city:search-results"]
-            const searchedCityNames = this.getUserOptions(allCities)
-            this.setState({ cities: searchedCityNames })
-        })
     }
 
     handleChange = (e: any) => {
@@ -70,13 +59,8 @@ class Form extends Component<MyProps, MyState> {
     }
 
     switchDataList = (key: keyof MyState) => {
-        if(!this.state[key].length) {
-            const cityDropDown = this.state.cities.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
-            return cityDropDown
-        } else {
-            const updatedDropDown = this.state[key].map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
-            return updatedDropDown
-        }
+            const dropDown = this.state[key].map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
+            return dropDown
     }
 
     handleClick = (e:any) => {
