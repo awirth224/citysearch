@@ -22,12 +22,12 @@ const Card: React.FC<CardProps> = ({ theCityInfo, }) => {
 
     return (
         <section className= "card-content">
-            <section className="card-front hidden">
+            <section className="card-front hidden ">
 							<img src={image} alt={name} />
 							<h2>City:  {name}</h2>
 							<h2> Population:  {population}</h2>
             </section>
-						<section className="card-back" >
+						<section className="card-back " >
 							<h2> All Ratings Out Of 10 </h2>
 							<section className="info-display">
 								<h2> Cost of living: </h2>

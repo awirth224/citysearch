@@ -8,14 +8,15 @@
     width:90%;
     box-shadow: 1px 2px 4px;
     border-radius: 2%;
+    margin-bottom: 3%;
 }
 .info-wrapper{
   display: flex;
   justify-content: center;
   border:2px solid black;
   width: 40%;
-  padding: 2%;
-  font-size: large;  
+  padding: 1.5%;
+  font-size: x-large;  
 }
 .card-back {
   display:flex;
@@ -25,8 +26,8 @@
 
 .card-content{
   border:2px solid black; 
-  width: 75%;
-  margin-left: 13%;
+  width: 65%;
+  margin-left: 18%;
   margin-top: 7%;
   box-shadow: 2px 2px 12px;
   
@@ -40,6 +41,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
+  perspective: 1000px;
 }
 .hidden {
   display:none; 
