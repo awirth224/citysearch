@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './Form.css'
 import searchFetch from '../apicalls/allCitiesApiCall';
 import getSingleCity from "../apicalls/singleCityApiCall";
 import grabGeonameId from "../apicalls/geonameId";
@@ -100,15 +101,22 @@ class Form extends Component<MyProps, MyState> {
 
     render() {
         return (
+          <div className="form">
             <form>
-                <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
-                <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
+                <div className='input-container'>
+                    <label>Starting City</label>
+                    <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
+                    <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
+                </div>
+                <div className='input-container'>
+                    <label>Desired City</label>
+                    <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
+                    <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
+                </div>
 
-                <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
-                <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
-
-                <button onClick={(e) => this.handleClick(e)}>Search</button>
+                <button onClick={(e) => this.handleClick(e)} className='search'>Search</button>
             </form>
+          </div>
         )
     }
 }
