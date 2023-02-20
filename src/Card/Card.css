@@ -26,10 +26,10 @@
 
 .card-content{
   border:2px solid black; 
-  width: 65%;
-  margin-left: 18%;
   margin-top: 7%;
   box-shadow: 2px 2px 12px;
+  width:43%;
+  margin-bottom:5%;
   
 }
 .card-front > img{
