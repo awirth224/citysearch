@@ -36,7 +36,7 @@ class App extends Component<MyProps, MyState> {
       <main className='app'>
         <Header />
         <Form />
-        <div>
+        <div className='display-area'>
           <Card theCityInfo={mockHomeCity} />
           <Card theCityInfo={mockDesiredCity} />
         </div>
