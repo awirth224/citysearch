@@ -3,6 +3,10 @@ import './App.css';
 import Header from '../Header/Header'
 import { searchFetch } from '../apicalls/allCitiesApiCall';
 import Form from '../Form/Form'
+import { 
+  searchFetch,
+  getCityDetails,
+} from '../apicalls/allCitiesApiCall';
 
 type MyProps = {
 
@@ -23,7 +27,17 @@ class App extends Component<MyProps, MyState> {
     desiredURL: ''
   }
 
+handleCallback = (param: string, secParam: string) => {
+  this.setState({homeURL: param, desiredURL: secParam})
 
+}
+
+getCitySlug = () => {
+  getCityDetails(this.state.homeURL)
+  .then(data => this.setState({ homeSlug: data['_links']['city:urban_area'].href }))
+  getCityDetails(this.state.desiredURL)
+  .then(data => this.setState({ desiredSlug: data['_links']['city:urban_area'].href }))
+}
 
 
   render() {
