@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from '../Header/Header'
-import searchFetch from '../apicalls/allCitiesApiCall';
+import { searchFetch } from '../apicalls/allCitiesApiCall';
 import Form from '../Form/Form'
 
 type MyProps = {
