@@ -3,6 +3,9 @@ import './App.css';
 import Header from '../Header/Header'
 import searchFetch from '../apicalls/allCitiesApiCall';
 import Form from '../Form/Form'
+import mockHomeCity from '../mockData/homeCity';
+import mockDesiredCity from '../mockData/desiredCity';
+import Card from '../Card/Card';
 
 type MyProps = {
 
@@ -33,6 +36,10 @@ class App extends Component<MyProps, MyState> {
       <main className='app'>
         <Header />
         <Form />
+        <div>
+          <Card theCityInfo={mockHomeCity} />
+          <Card theCityInfo={mockDesiredCity} />
+        </div>
       </main>
     )
   }
