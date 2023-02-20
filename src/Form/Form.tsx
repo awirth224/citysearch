@@ -68,11 +68,11 @@ class Form extends Component<MyProps, MyState> {
         
         const homeCityURL = this.state.homeCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.homeCity)
         getCityDetails(homeCityURL.href)
-            .then(data => this.setState({ homeURL: data['_links']['city:urban_area'].href+'scores' }))
+            .then(data => this.setState({ homeURL: data['_links']['city:urban_area'].href }))
 
         const desiredCityURL = this.state.desiredCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.desiredCity)
         getCityDetails(desiredCityURL.href)
-            .then(data => this.setState({ desiredURL: data['_links']['city:urban_area'].href+'scores' }))
+            .then(data => this.setState({ desiredURL: data['_links']['city:urban_area'].href }))
     }
 
     render() {
