@@ -1,6 +1,6 @@
 type desiredCity = {
     name: string;
-    population: number;
+    population: number | string;
     housing: number;
     image: string;
     costOfLiving: number;

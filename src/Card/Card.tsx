@@ -10,7 +10,7 @@ type CardProps = {
 const Card: React.FC<CardProps> = ({ theCityInfo, }) => {
     const name: string = theCityInfo.name;
     const image: string = theCityInfo.image;
-    const population: number = theCityInfo.population;
+    const population: string = theCityInfo.population.toLocaleString('en-US');
     const housing : number = theCityInfo.housing;
     const costOfLiving:number = theCityInfo.costOfLiving;
     const commute: number = theCityInfo.commute;
@@ -22,14 +22,14 @@ const Card: React.FC<CardProps> = ({ theCityInfo, }) => {
    
 
     return (
-        <section>
-            <section className="card-front" hidden>
+        <section className= "card-content">
+            <section className="card-front hidden">
 							<img src={image} alt={name} />
-							<h2>City: {name}</h2>
-							<h2> Population: {population}</h2>
+							<h2>City:  {name}</h2>
+							<h2> Population:  {population}</h2>
             </section>
 						<section className="card-back" >
-							<h2> All ratings out of 10 </h2>
+							<h2> All Ratings Out Of 10 </h2>
 							<section className="info-display">
 								<h2> Cost of living </h2>
 								<div className="info-wrapper">{costOfLiving}</div>
