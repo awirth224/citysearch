@@ -8,6 +8,7 @@ type MyProps = {
 }
 
 type MyState = {
+    cities: any;
     homeCity: string;
     desiredCity: string;
     homeCityNames: any;
@@ -17,6 +18,7 @@ type MyState = {
 class Form extends Component<MyProps, MyState> {
 
     state: MyState = {
+        cities: [],
         homeCity: '',
         desiredCity: '',
         homeCityNames: [],
@@ -50,14 +52,13 @@ class Form extends Component<MyProps, MyState> {
        
     }
 
-    getUserOptions = (cities: []) => {
-        // const allResults: string[] = cities.map(city => city["matching_full_name"])
-        const allResults: {}[] = cities.map(city => ({
-            href: city["_links"]["city:item"]["href"],
-            fullName: city["matching_full_name"]
-        }))
-        console.log(allResults)
-        return allResults
+    componentDidMount(): void {
+        searchFetch()
+        .then(data => {
+            const allCities = data["_embedded"]["city:search-results"]
+            const searchedCityNames = this.getUserOptions(allCities)
+            this.setState({ cities: searchedCityNames })
+        })
     }
 
     handleChange = (e: any) => {
@@ -65,37 +66,46 @@ class Form extends Component<MyProps, MyState> {
         const value: string = e.target.value
 
         if (name === 'homeCity') {
-            // this.setState({ homeCity: value })
-            searchFetch(this.state.homeCity).then(data => {
+            searchFetch(value).then(data => {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({ homeCityNames: searchedCityNames })
                 this.setState({homeCity: value, homeCityNames: searchedCityNames })
             })
         } else if (name === 'desiredCity') {
-           
-            searchFetch(this.state.desiredCity).then(data => {
+            searchFetch(value).then(data => {
                 const allCities = data["_embedded"]["city:search-results"]
                 const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({ desiredCity:value, desiredCityNames: searchedCityNames })
-                
+                this.setState({desiredCity: value, desiredCityNames: searchedCityNames })
             })
         }
+    }
 
+    getUserOptions = (cities: []) => {
+        const allResults: {}[] = cities.map(city => ({
+            href: city["_links"]["city:item"]["href"],
+            fullName: city["matching_full_name"]
+        }))
+        return allResults
+    }
 
+    switchDataList = (key: keyof MyState) => {
+        if(!this.state[key].length) {
+            const cityDropDown = this.state.cities.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
+            return cityDropDown
+        } else {
+            const updatedDropDown = this.state[key].map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
+            return updatedDropDown
+        }
     }
 
     render() {
-        const homeDropDown = this.state.homeCityNames.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
-        const desiredDropDown = this.state.desiredCityNames.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
-
         return (
             <form>
-                <input type='search' list='homeCityNames' autoComplete='off' name='homeCity' value={this.state.homeCity} placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='homeCityNames'>{homeDropDown}</datalist>
+                <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
+                <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
 
-                <input type='search' list='desiredCityNames' autoComplete='off' name='desiredCity' value={this.state.desiredCity} placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
-                <datalist id='desiredCityNames'>{desiredDropDown}</datalist>
+                <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
+                <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
 
                 <button onClick={(e) => this.handleClick(e)}>Search</button>
             </form>
