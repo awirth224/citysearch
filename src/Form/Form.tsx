@@ -14,10 +14,8 @@ type MyProps = {
 type MyState = {
     homeCity: string;
     homeCityNames: any;
-    homeURL: string;
     desiredCity: string;
     desiredCityNames: any;
-    desiredURL: string;
 }
 
 class Form extends Component<MyProps, MyState> {
@@ -25,10 +23,8 @@ class Form extends Component<MyProps, MyState> {
     state: MyState = {
         homeCity: '',
         homeCityNames: [],
-        homeURL: '',
         desiredCity: '',
         desiredCityNames: [],
-        desiredURL: '',
     }
 
     handleChange = (e: any) => {

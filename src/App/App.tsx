@@ -9,18 +9,18 @@ type MyProps = {
 }
 
 type MyState = {
-  city: string;
-  cities: string[];
-  cityNames: string[];
-  url: string;
+  homeSlug: string,
+  homeURL: string,
+  desiredSlug: string,
+  desiredURL: string
 }
 
 class App extends Component<MyProps, MyState> {
   state: MyState = {
-    city: '',
-    cities: [],
-    cityNames: [],
-    url: ''
+    homeSlug: '',
+    homeURL: '',
+    desiredSlug: '',
+    desiredURL: ''
   }
 
 
