@@ -103,14 +103,18 @@ class Form extends Component<MyProps, MyState> {
         return (
           <div className="form">
             <form>
-                <label>Starting City</label>
-                <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
-                <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
-                <label>Desired City</label>
-                <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
-                <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
+                <div className='input-container'>
+                    <label>Starting City</label>
+                    <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
+                    <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
+                </div>
+                <div className='input-container'>
+                    <label>Desired City</label>
+                    <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
+                    <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
+                </div>
 
-                <button onClick={(e) => this.handleClick(e)}>Search</button>
+                <button onClick={(e) => this.handleClick(e)} className='search'>Search</button>
             </form>
           </div>
         )
