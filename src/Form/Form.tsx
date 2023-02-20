@@ -101,10 +101,10 @@ class Form extends Component<MyProps, MyState> {
     render() {
         return (
             <form>
-                <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
+                <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
                 <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
 
-                <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
+                <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
                 <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
 
                 <button onClick={(e) => this.handleClick(e)}>Search</button>
