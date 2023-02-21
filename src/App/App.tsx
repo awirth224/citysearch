@@ -38,6 +38,7 @@ class App extends Component<MyProps, MyState> {
         <Form />
         <div className='display-area'>
           <Card theCityInfo={mockHomeCity} />
+
           <Card theCityInfo={mockDesiredCity} />
         </div>
       </main>
