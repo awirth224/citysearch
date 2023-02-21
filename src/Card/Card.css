@@ -30,11 +30,15 @@
   box-shadow: 2px 2px 12px;
   width:43%;
   margin-bottom:5%;
-  
+  perspective: 1000px;
+  background-color: transparent;
 }
-.card-front > img{
+.card-front > img {
+  display: block;
+  object-fit: fill;
+  object-position: center;
   width: 100%;
-  height: 30rem;
+  height: 18rem;
 }
 .card-front{
   display: flex;
@@ -42,7 +46,11 @@
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  perspective: 1000px;
+  position: relative;
+  width: 100%;
+  height:100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
 .hidden {
   display:none; 

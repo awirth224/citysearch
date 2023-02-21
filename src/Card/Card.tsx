@@ -18,11 +18,13 @@ const Card: React.FC<CardProps> = ({ theCityInfo, }) => {
     const economy:number = theCityInfo.economy; 
 		const environmentalQuality:number = theCityInfo.environmentalQuality;
 		const safety: number = theCityInfo.safety; 
+
+
    
 
     return (
         <section className= "card-content">
-            <section className="card-front">
+            <section className="card-front ">
 							<img src={image} alt={name} />
 							<h2>City:  {name}</h2>
 							<h2> Population:  {population}</h2>
@@ -61,7 +63,8 @@ const Card: React.FC<CardProps> = ({ theCityInfo, }) => {
 								<h2> HealthCare: </h2>
 								<div className="info-wrapper">	{healthCare} </div>
 						 </section>
-						</section>  
+						</section> 
+						
       </section>
     )
 }
