@@ -7,4 +7,10 @@ const searchFetch = (cityName?: string) => {
 };
 
 
-export default searchFetch;
+const getCityDetails = (url: string) => {
+    return fetch(url)
+    .then(response => response.json())
+}
+
+
+export { searchFetch, getCityDetails };
