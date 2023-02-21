@@ -8,7 +8,9 @@ import getSingleCity from "../apicalls/singleCityApiCall";
 import grabGeonameId from "../apicalls/geonameId";
 
 type MyProps = {
-    handleCallback: Function;       
+    handleCallback: Function;  
+    homeUrbanArea: boolean;  
+    desiredUrbanArea: boolean;
 }
 
 type MyState = {
@@ -69,7 +71,7 @@ class Form extends Component<MyProps, MyState> {
         const desiredCityURL = desiredCityObject.href
 
         this.props.handleCallback(homeCityURL, desiredCityURL)
-
+        // this.props.homeSlug === "" && <h2>Please choose valid city</h2>
     }
 
     render() {
@@ -81,12 +83,13 @@ class Form extends Component<MyProps, MyState> {
                     <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
                     <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
                 </div>
+                {!this.props.homeUrbanArea && <h2>Please enter a valid city</h2>}
                 <div className='input-container'>
                     <label>Desired City</label>
                     <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
                     <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
                 </div>
-
+                {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
                 <button onClick={(e) => this.handleClick(e)} className='search'>Search</button>
             </form>
           </div>
