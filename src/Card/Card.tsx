@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { createNamedExports } from "typescript";
 import './Card.css';
 
 type CardProps = {
 	theCityInfo: any;
+	cityName: string;
+	cityPopulation: number;
 }
 
 type CardState = {
@@ -25,28 +28,30 @@ class Card extends Component<CardProps, CardState> {
 		this.setState({ backClicked: true, frontClicked: false })
 	}
 
-
-
 	render() {
 
-		const name: string = this.props.theCityInfo.name;
-		const image: string = this.props.theCityInfo.image;
-		const population: string = this.props.theCityInfo.population.toLocaleString('en-US');
-		const housing: number = this.props.theCityInfo.housing;
-		const costOfLiving: number = this.props.theCityInfo.costOfLiving;
-		const commute: number = this.props.theCityInfo.commute;
-		const healthCare: number = this.props.theCityInfo.healthCare;
-		const education: number = this.props.theCityInfo.education;
-		const economy: number = this.props.theCityInfo.economy;
-		const environmentalQuality: number = this.props.theCityInfo.environmentalQuality;
-		const safety: number = this.props.theCityInfo.safety;
+		console.log('props card', this.props.theCityInfo)
+
+		const name: string = this.props.cityName;
+		//const image: string = this.props.cityImage
+		const population: string = this.props.cityPopulation.toLocaleString('en-US');
+		const housing: number = this.props.theCityInfo.Housing;
+		const costOfLiving: number = this.props.theCityInfo['Cost of Living'];
+		const commute: number = this.props.theCityInfo.Commute;
+		const healthCare: number = this.props.theCityInfo.Healthcare;
+		const education: number = this.props.theCityInfo.Education;
+		const economy: number = this.props.theCityInfo.Economy;
+		const environmentalQuality: number = this.props.theCityInfo['Environmental Quality'];
+		const safety: number = this.props.theCityInfo.Safety;
+
 
 		let cardDisplay: any;
 
 		if (this.state.backClicked) {
 			cardDisplay =
 				<section className="card-front">
-					<img src={image} alt={name} />
+					{/* <img src={image} alt={'test'} /> */}
+
 					<h2>City:  {name}</h2>
 					<h2> Population:  {population}</h2>
 					<button onClick={() => this.clickFrontButton()}>City Info</button>
@@ -54,7 +59,7 @@ class Card extends Component<CardProps, CardState> {
 		} else if (this.state.frontClicked) {
 			cardDisplay =
 				<section className="card-back" >
-					<h2> All {name} Ratings Out Of 10 </h2>
+					{/* <h2> All {name} Ratings Out Of 10 </h2> */}
 					<section className="info-display">
 						<h2> Cost of living: </h2>
 						<div className="info-wrapper">{costOfLiving}</div>
