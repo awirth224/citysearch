@@ -3,9 +3,9 @@ import './App.css';
 import Header from '../Header/Header'
 import Form from '../Form/Form'
 import Card from '../Card/Card';
-import { getCityDetails } from '../apicalls/allCitiesApiCall';
-import { createNamedExports } from 'typescript';
+import { getCityDetails, getSpecifiedInfo } from '../apicalls/allCitiesApiCall';
 import grabGeonameId from '../apicalls/geonameId'
+
 
 type MyProps = {
 
@@ -64,8 +64,9 @@ class App extends Component<MyProps, MyState> {
 
 
   // refactor
-  getCityScores = () => {
-    fetch(`${this.state.homeSlug}scores/`)
+  getCityScores = () => {  
+  
+  fetch(`${this.state.homeSlug}scores/`)
       .then(response => response.json())
       .then(data => {
         const newScores = data.categories.reduce((acc: any, curr: any) => {
@@ -89,17 +90,16 @@ class App extends Component<MyProps, MyState> {
       })
   }
 
-  getSlug = (lemon: string, lime: string) => {
-    getCityDetails(lemon)
+  getSlug = (homeSlug: string, desiredSlug: string) => {
+    getCityDetails(homeSlug)
       .then(data => {
         if (!data['_links']['city:urban_area']) {
           this.setState({ homeUrbanArea: false })
         } else {
           this.setState({ homeSlug: data['_links']['city:urban_area'].href })
         }
-      })
-      .then(() => {
-        getCityDetails(lime)
+      }).then(() => {
+        getCityDetails(desiredSlug)
           .then(data => {
             if (!data['_links']['city:urban_area']) {
               this.setState({ desiredUrbanArea: false })
@@ -109,6 +109,7 @@ class App extends Component<MyProps, MyState> {
           })
           .then(() => this.getCityScores())
       })
+      
   }
 
   // getImage = () => {
