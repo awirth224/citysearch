@@ -3,7 +3,10 @@ import './App.css';
 import Header from '../Header/Header'
 import Form from '../Form/Form'
 import Card from '../Card/Card';
-import { getCityDetails, getSpecifiedInfo } from '../apicalls/allCitiesApiCall';
+import { 
+  getCityDetails, 
+  getSpecifiedInfo
+} from '../apicalls/allCitiesApiCall';
 import grabGeonameId from '../apicalls/geonameId'
 
 
