@@ -8,6 +8,7 @@ import {
   getSpecifiedInfo
 } from '../apicalls/allCitiesApiCall';
 import grabGeonameId from '../apicalls/geonameId'
+import { Route , NavLink } from 'react-router-dom'; 
 
 
 type MyProps = {
@@ -117,7 +118,10 @@ class App extends Component<MyProps, MyState> {
     return (
       <main className='app'>
         <Header />
-        <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} />
+       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} /> } /> 
+
+        <Route exact path='/cities' render={()=>{
+          return(
         <div className='display-area'>
           <Card 
             cityInfo={this.state.homeCityScores} 
@@ -132,9 +136,25 @@ class App extends Component<MyProps, MyState> {
             cityImage={this.state.desiredImage}
           />
         </div>
+
+
+
+          )
+        }}
+        />
+        
       </main>
     )
   }
 }
 
 export default App;
+// <Route path='/movies/:id' render={({ match }) => {
+//           return (
+//             <div className='info-container'>
+//               <MovieInfo movieID={match.params.id} />
+//             </div>
+//           )
+//         }} ></Route>
+
+// import { Route, NavLink } from 'react-router-dom'
