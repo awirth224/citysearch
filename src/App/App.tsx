@@ -48,21 +48,7 @@ class App extends Component<MyProps, MyState> {
     desiredCityPopulation: 0
   }
 
-  // if desiredSlug or homeSlug exists, fetch call from that url + scores/
-  // go through that data and set it to state, need to make like desiredScores and homeScores
-  // they should try to match the mock data if possible
-
   handleCallback = (param: string, secParam: string) => {
-
-    // fetch(param)
-    //   .then(response => response.json())
-    //   .then(data => {
-
-    //     console.log(data.name)
-    //     //   this.setState({ 
-    //     //   homeURL: param, desiredURL: secParam, homeName: data.name
-    //     // }))
-    //   }
 
     grabGeonameId(param)
       .then(data => {
@@ -74,8 +60,6 @@ class App extends Component<MyProps, MyState> {
         this.setState({ desiredURL: secParam, desiredCityName: data.name, desiredCityPopulation: data.population })
       })
 
-
-    // this.setState({ homeURL: param, desiredURL: secParam })
     this.getSlug(param, secParam)
     //this.getImage()
   }
@@ -83,35 +67,29 @@ class App extends Component<MyProps, MyState> {
 
 
   getCityScores = () => {
-    if (this.state.homeSlug) {
-      fetch(`${this.state.homeSlug}scores/`)
-        .then(response => response.json())
-        .then(data => {
-          const newScores = data.categories.reduce((acc: any, curr: any) => {
-            acc[curr.name] = curr.score_out_of_10
-            return acc
-          }, {})
+    fetch(`${this.state.homeSlug}scores/`)
+      .then(response => response.json())
+      .then(data => {
+        const newScores = data.categories.reduce((acc: any, curr: any) => {
+          acc[curr.name] = curr.score_out_of_10
+          return acc
+        }, {})
 
-          this.setState({ homeCityScores: newScores })
-        })
-    }
+        this.setState({ homeCityScores: newScores })
+      })
+      .then(() => {
+        fetch(`${this.state.desiredSlug}scores/`)
+          .then(response => response.json())
+          .then(data => {
+            const newScores = data.categories.reduce((acc: any, curr: any) => {
+              acc[curr.name] = curr.score_out_of_10
+              return acc
+            }, {})
 
-    if (this.state.desiredSlug) {
-      fetch(`${this.state.desiredSlug}scores/`)
-        .then(response => response.json())
-        .then(data => {
-          const newScores = data.categories.reduce((acc: any, curr: any) => {
-            acc[curr.name] = curr.score_out_of_10
-            return acc
-          }, {})
-
-          this.setState({ desiredCityScores: newScores })
-        })
-    }
+            this.setState({ desiredCityScores: newScores })
+          })
+      })
   }
-
-
-
 
   getSlug = (lemon: string, lime: string) => {
     getCityDetails(lemon)
@@ -122,21 +100,18 @@ class App extends Component<MyProps, MyState> {
           this.setState({ homeSlug: data['_links']['city:urban_area'].href })
         }
       })
-      .then(() => this.getCityScores())
-
-    getCityDetails(lime)
-      .then(data => {
-        if (!data['_links']['city:urban_area']) {
-          this.setState({ desiredUrbanArea: false })
-        } else {
-          this.setState({ desiredSlug: data['_links']['city:urban_area'].href })
-        }
+      .then(() => {
+        getCityDetails(lime)
+          .then(data => {
+            if (!data['_links']['city:urban_area']) {
+              this.setState({ desiredUrbanArea: false })
+            } else {
+              this.setState({ desiredSlug: data['_links']['city:urban_area'].href })
+            }
+          })
+          .then(() => this.getCityScores())
       })
-      .then(() => this.getCityScores())
   }
-
-
-
 
   // getSlug = (lemon: string, lime: string) => {
   //   getCityDetails(lemon)
@@ -167,11 +142,9 @@ class App extends Component<MyProps, MyState> {
     let displayDesiredCard: any;
 
     if (this.state.homeCityScores && this.state.desiredCityScores) {
-      displayHomeCard = <Card theCityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} cityPopulation={this.state.homeCityPopulation} />
-      displayDesiredCard = <Card theCityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} />
+      displayHomeCard = <Card theCityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} cityPopulation={this.state.homeCityPopulation} cityImage={this.state.homeImage} />
+      displayDesiredCard = <Card theCityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} cityImage={this.state.homeImage} />
     }
-
-
 
     return (
       <main className='app'>
