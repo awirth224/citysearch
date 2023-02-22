@@ -65,21 +65,18 @@ class App extends Component<MyProps, MyState> {
 
   // refactor
   getCityScores = () => {  
-  
-  fetch(`${this.state.homeSlug}scores/`)
-      .then(response => response.json())
-      .then(data => {
+   getSpecifiedInfo(this.state.homeSlug,'scores/')
+    .then(data => {
         const newScores = data.categories.reduce((acc: any, curr: any) => {
           acc[curr.name] = curr.score_out_of_10
           return acc
         }, {})
 
-        this.setState({ homeCityScores: newScores })
-      })
-      .then(() => {
-        fetch(`${this.state.desiredSlug}scores/`)
-          .then(response => response.json())
-          .then(data => {
+      this.setState({ homeCityScores: newScores })
+    })
+    .then(() => {
+      getSpecifiedInfo(this.state.desiredSlug,'scores/')
+       .then(data => {
             const newScores = data.categories.reduce((acc: any, curr: any) => {
               acc[curr.name] = curr.score_out_of_10
               return acc
@@ -87,8 +84,9 @@ class App extends Component<MyProps, MyState> {
 
             this.setState({ desiredCityScores: newScores })
           })
-      })
-  }
+        })
+    }    
+  
 
   getSlug = (homeSlug: string, desiredSlug: string) => {
     getCityDetails(homeSlug)
