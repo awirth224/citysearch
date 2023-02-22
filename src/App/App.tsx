@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from '../Header/Header'
 import Form from '../Form/Form'
-// import mockHomeCity from '../mockData/homeCity';
-// import mockDesiredCity from '../mockData/desiredCity';
 import Card from '../Card/Card';
 import { getCityDetails } from '../apicalls/allCitiesApiCall';
 import { createNamedExports } from 'typescript';
@@ -113,26 +111,6 @@ class App extends Component<MyProps, MyState> {
       })
   }
 
-  // getSlug = (lemon: string, lime: string) => {
-  //   getCityDetails(lemon)
-  //     .then(data => {
-  //       if (!data['_links']['city:urban_area']) {
-  //         this.setState({ homeUrbanArea: false })
-  //       } else {
-  //         this.setState({ homeSlug: data['_links']['city:urban_area'].href })
-  //       }
-  //     })
-
-  //   getCityDetails(lime)
-  //     .then(data => {
-  //       if (!data['_links']['city:urban_area']) {
-  //         this.setState({ desiredUrbanArea: false })
-  //       } else {
-  //         this.setState({ desiredSlug: data['_links']['city:urban_area'].href })
-  //       }
-  //     })
-  // }
-
   // getImage = () => {
   // }
 
@@ -141,9 +119,11 @@ class App extends Component<MyProps, MyState> {
     let displayHomeCard: any;
     let displayDesiredCard: any;
 
+    // combine properties in state so we only have to pass in 1-2 props
+
     if (this.state.homeCityScores && this.state.desiredCityScores) {
-      displayHomeCard = <Card theCityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} cityPopulation={this.state.homeCityPopulation} cityImage={this.state.homeImage} />
-      displayDesiredCard = <Card theCityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} cityImage={this.state.homeImage} />
+      displayHomeCard = <Card cityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} cityPopulation={this.state.homeCityPopulation} cityImage={this.state.homeImage} />
+      displayDesiredCard = <Card cityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} cityImage={this.state.homeImage} />
     }
 
     return (
@@ -151,8 +131,6 @@ class App extends Component<MyProps, MyState> {
         <Header />
         <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} />
         <div className='display-area'>
-          {/* <Card theCityInfo={this.state.homeCityScores} />
-          <Card theCityInfo={this.state.desiredCityScores} /> */}
           {displayHomeCard}
           {displayDesiredCard}
         </div>
