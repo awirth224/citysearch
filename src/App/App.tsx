@@ -93,7 +93,7 @@ class App extends Component<MyProps, MyState> {
     getCityDetails(lemon)
       .then(data => {
         if (!data['_links']['city:urban_area']) {
-          this.setState({ homeUrbanArea: false })
+          this.setState({ homeUrbanArea: false, homeCityName: '', homeSlug:'', homeURL: '', homeImage: '', homeCityScores: [], homeCityPopulation: 0  })
         } else {
           this.setState({ homeSlug: data['_links']['city:urban_area'].href })
         }
@@ -102,7 +102,7 @@ class App extends Component<MyProps, MyState> {
         getCityDetails(lime)
           .then(data => {
             if (!data['_links']['city:urban_area']) {
-              this.setState({ desiredUrbanArea: false })
+              this.setState({ desiredUrbanArea: false, desiredCityName: '', desiredSlug: '', desiredURL: '', desiredImage: '', desiredCityScores: [], desiredCityPopulation: 0 })
             } else {
               this.setState({ desiredSlug: data['_links']['city:urban_area'].href })
             }
