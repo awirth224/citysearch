@@ -82,22 +82,22 @@ class App extends Component<MyProps, MyState> {
   getSlug = (homeSlug: string, lime: string) => {
       getCityDetails(homeSlug)
         .then(data => {
-          const urbanPath = data['_links']['city:urban_area']
+          const urbanPath = data['_links']['city:urban_area'].href
           if (!urbanPath) {
             this.setState({ homeUrbanArea: false })
           } else {
-            this.setState({ homeSlug: urbanPath.href })
-            this.getCityScores('home', urbanPath.href, 'scores')
+            // this.setState({ homeSlug: urbanPath.href })
+            this.getCityScores('home', urbanPath, 'scores')
           }
         })
       getCityDetails(lime)
       .then(data => {
-        const urbanPath = data['_links']['city:urban_area']
+        const urbanPath = data['_links']['city:urban_area'].href
         if (!urbanPath) {
           this.setState({ desiredUrbanArea: false })
         } else {
-          this.setState({ desiredSlug: urbanPath.href })
-          this.getCityScores('desired', urbanPath.href, 'scores')
+          // this.setState({ desiredSlug: urbanPath.href })
+          this.getCityScores('desired', urbanPath, 'scores')
         }
       })
   }
