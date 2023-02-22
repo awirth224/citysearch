@@ -62,8 +62,7 @@ class Form extends Component<MyProps, MyState> {
             return dropDown
     }
 
-    handleClick = (e:any) => {
-        // e.preventDefault()
+    handleClick = () => {
         
         const homeCityObject = this.state.homeCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.homeCity)
         const homeCityURL = homeCityObject.href
@@ -91,7 +90,7 @@ class Form extends Component<MyProps, MyState> {
                     <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
                 </div>
                 {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
-               <Link to='/cities'>  <button onClick={(e) => this.handleClick(e)} className='search'>Search</button> </Link>
+               <Link to='/cities'>  <button onClick={() => this.handleClick()} className='search'>Search</button> </Link>
             </form>
           </div>
         )
