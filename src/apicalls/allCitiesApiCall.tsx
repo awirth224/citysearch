@@ -12,5 +12,9 @@ const getCityDetails = (url: string) => {
     .then(response => response.json())
 }
 
+const getSpecifiedInfo = (url:string , endpoint: string) => {
+    return fetch(`${url}${endpoint}`)
+    .then(response => response.json())
+}
 
-export { searchFetch, getCityDetails };
+export { searchFetch, getCityDetails , getSpecifiedInfo};
