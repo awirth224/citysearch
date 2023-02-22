@@ -113,6 +113,23 @@ class App extends Component<MyProps, MyState> {
         }
       })
   }
+  clearState = () => {
+    this.setState({
+    homeURL: '',
+    desiredURL: '',
+    homeUrbanArea: true,
+    desiredUrbanArea: true,
+    homeImage: '',
+    desiredImage: '',
+    homeCityScores: [],
+    desiredCityScores: [],
+    homeCityName: '',
+    homeCityPopulation: 0,
+    desiredCityName: '',
+    desiredCityPopulation: 0
+    })
+   
+  }
 
   render() {
     return (
@@ -123,6 +140,7 @@ class App extends Component<MyProps, MyState> {
         <Route exact path='/cities' render={()=>{
           return(
         <div className='display-area'>
+         <NavLink to='/'><button className='home-btn' onClick={() => this.clearState()}> Home </button> </NavLink> 
           <Card 
             cityInfo={this.state.homeCityScores} 
             cityName={this.state.homeCityName} 
@@ -142,19 +160,10 @@ class App extends Component<MyProps, MyState> {
           )
         }}
         />
-        
+
       </main>
     )
   }
 }
 
 export default App;
-// <Route path='/movies/:id' render={({ match }) => {
-//           return (
-//             <div className='info-container'>
-//               <MovieInfo movieID={match.params.id} />
-//             </div>
-//           )
-//         }} ></Route>
-
-// import { Route, NavLink } from 'react-router-dom'

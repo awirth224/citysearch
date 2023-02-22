@@ -72,6 +72,7 @@ class Form extends Component<MyProps, MyState> {
 
         this.props.handleCallback(homeCityURL, desiredCityURL)
         // this.props.homeSlug === "" && <h2>Please choose valid city</h2>
+        
     }
 
     render() {
