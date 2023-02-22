@@ -63,7 +63,7 @@ class App extends Component<MyProps, MyState> {
   }
 
 
-
+  // refactor
   getCityScores = () => {
     fetch(`${this.state.homeSlug}scores/`)
       .then(response => response.json())

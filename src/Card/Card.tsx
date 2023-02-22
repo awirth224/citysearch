@@ -23,6 +23,8 @@ class Card extends Component<CardProps, CardState> {
 		backClicked: true
 	}
 
+
+	// maybe refactor flip methods to one?
 	clickFrontButton = () => {
 		this.setState({ frontClicked: true, backClicked: false })
 	}
