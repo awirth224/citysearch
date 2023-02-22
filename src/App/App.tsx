@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from '../Header/Header'
 import Form from '../Form/Form'
-import mockHomeCity from '../mockData/homeCity';
-import mockDesiredCity from '../mockData/desiredCity';
+// import mockHomeCity from '../mockData/homeCity';
+// import mockDesiredCity from '../mockData/desiredCity';
 import Card from '../Card/Card';
 import { getCityDetails } from '../apicalls/allCitiesApiCall';
 import { createNamedExports } from 'typescript';
+import grabGeonameId from '../apicalls/geonameId'
 
 type MyProps = {
 
@@ -20,7 +21,13 @@ type MyState = {
   homeUrbanArea: boolean,
   desiredUrbanArea: boolean,
   homeImage: string,
-  desiredImage: string
+  desiredImage: string,
+  homeCityScores: [],
+  desiredCityScores: [],
+  homeCityName: string,
+  homeCityPopulation: number,
+  desiredCityName: string,
+  desiredCityPopulation: number
 }
 
 class App extends Component<MyProps, MyState> {
@@ -32,14 +39,79 @@ class App extends Component<MyProps, MyState> {
     homeUrbanArea: true,
     desiredUrbanArea: true,
     homeImage: '',
-    desiredImage: ''
+    desiredImage: '',
+    homeCityScores: [],
+    desiredCityScores: [],
+    homeCityName: '',
+    homeCityPopulation: 0,
+    desiredCityName: '',
+    desiredCityPopulation: 0
   }
 
+  // if desiredSlug or homeSlug exists, fetch call from that url + scores/
+  // go through that data and set it to state, need to make like desiredScores and homeScores
+  // they should try to match the mock data if possible
+
   handleCallback = (param: string, secParam: string) => {
-    this.setState({ homeURL: param, desiredURL: secParam })
+
+    // fetch(param)
+    //   .then(response => response.json())
+    //   .then(data => {
+
+    //     console.log(data.name)
+    //     //   this.setState({ 
+    //     //   homeURL: param, desiredURL: secParam, homeName: data.name
+    //     // }))
+    //   }
+
+    grabGeonameId(param)
+      .then(data => {
+        this.setState({ homeURL: param, homeCityName: data.name, homeCityPopulation: data.population })
+      })
+
+    grabGeonameId(secParam)
+      .then(data => {
+        this.setState({ desiredURL: secParam, desiredCityName: data.name, desiredCityPopulation: data.population })
+      })
+
+
+    // this.setState({ homeURL: param, desiredURL: secParam })
     this.getSlug(param, secParam)
     //this.getImage()
   }
+
+
+
+  getCityScores = () => {
+    if (this.state.homeSlug) {
+      fetch(`${this.state.homeSlug}scores/`)
+        .then(response => response.json())
+        .then(data => {
+          const newScores = data.categories.reduce((acc: any, curr: any) => {
+            acc[curr.name] = curr.score_out_of_10
+            return acc
+          }, {})
+
+          this.setState({ homeCityScores: newScores })
+        })
+    }
+
+    if (this.state.desiredSlug) {
+      fetch(`${this.state.desiredSlug}scores/`)
+        .then(response => response.json())
+        .then(data => {
+          const newScores = data.categories.reduce((acc: any, curr: any) => {
+            acc[curr.name] = curr.score_out_of_10
+            return acc
+          }, {})
+
+          this.setState({ desiredCityScores: newScores })
+        })
+    }
+  }
+
+
+
 
   getSlug = (lemon: string, lime: string) => {
     getCityDetails(lemon)
@@ -50,6 +122,7 @@ class App extends Component<MyProps, MyState> {
           this.setState({ homeSlug: data['_links']['city:urban_area'].href })
         }
       })
+      .then(() => this.getCityScores())
 
     getCityDetails(lime)
       .then(data => {
@@ -59,19 +132,56 @@ class App extends Component<MyProps, MyState> {
           this.setState({ desiredSlug: data['_links']['city:urban_area'].href })
         }
       })
+      .then(() => this.getCityScores())
   }
+
+
+
+
+  // getSlug = (lemon: string, lime: string) => {
+  //   getCityDetails(lemon)
+  //     .then(data => {
+  //       if (!data['_links']['city:urban_area']) {
+  //         this.setState({ homeUrbanArea: false })
+  //       } else {
+  //         this.setState({ homeSlug: data['_links']['city:urban_area'].href })
+  //       }
+  //     })
+
+  //   getCityDetails(lime)
+  //     .then(data => {
+  //       if (!data['_links']['city:urban_area']) {
+  //         this.setState({ desiredUrbanArea: false })
+  //       } else {
+  //         this.setState({ desiredSlug: data['_links']['city:urban_area'].href })
+  //       }
+  //     })
+  // }
 
   // getImage = () => {
   // }
 
   render() {
+
+    let displayHomeCard: any;
+    let displayDesiredCard: any;
+
+    if (this.state.homeCityScores && this.state.desiredCityScores) {
+      displayHomeCard = <Card theCityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} cityPopulation={this.state.homeCityPopulation} />
+      displayDesiredCard = <Card theCityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} />
+    }
+
+
+
     return (
       <main className='app'>
         <Header />
         <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} />
         <div className='display-area'>
-          <Card theCityInfo={mockHomeCity} />
-          <Card theCityInfo={mockDesiredCity} />
+          {/* <Card theCityInfo={this.state.homeCityScores} />
+          <Card theCityInfo={this.state.desiredCityScores} /> */}
+          {displayHomeCard}
+          {displayDesiredCard}
         </div>
       </main>
     )
