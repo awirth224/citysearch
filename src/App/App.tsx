@@ -12,9 +12,7 @@ type MyProps = {
 }
 
 type MyState = {
-  homeSlug: string,
   homeURL: string,
-  desiredSlug: string,
   desiredURL: string,
   homeUrbanArea: boolean,
   desiredUrbanArea: boolean,
@@ -30,9 +28,7 @@ type MyState = {
 
 class App extends Component<MyProps, MyState> {
   state: MyState = {
-    homeSlug: '',
     homeURL: '',
-    desiredSlug: '',
     desiredURL: '',
     homeUrbanArea: true,
     desiredUrbanArea: true,
@@ -59,11 +55,32 @@ class App extends Component<MyProps, MyState> {
       })
 
     this.getSlug(param, secParam)
-    //this.getImage()
   }
 
+  getSlug = (homeSlug: string, lime: string) => {
+    getCityDetails(homeSlug)
+      .then(data => {
+        const urbanPath = data['_links']['city:urban_area'].href
+        if (!urbanPath) {
+          this.setState({ homeUrbanArea: false })
+        } else {
+          this.getCityScores('home', urbanPath, 'scores')
+          this.getCityImages('home', urbanPath, 'images')
+        }
+      })
+    getCityDetails(lime)
+      .then(data => {
+        const urbanPath = data['_links']['city:urban_area'].href
+        
+        if (!urbanPath) {
+          this.setState({ desiredUrbanArea: false })
+        } else {
+          this.getCityScores('desired', urbanPath, 'scores')
+          this.getCityImages('desired', urbanPath, 'images')
+        }
+      })
+  }
 
-  // refactor
   getCityScores = (type: string, url: string, endpoint: string) => {
     getSpecifiedInfo(url, endpoint)
       .then(data => {
@@ -71,6 +88,7 @@ class App extends Component<MyProps, MyState> {
           acc[curr.name] = curr.score_out_of_10
           return acc
         }, {})
+        
         if(type === 'home') {
           this.setState({ homeCityScores: newScores })
         } else {
@@ -79,44 +97,18 @@ class App extends Component<MyProps, MyState> {
       })
   }
 
-  getSlug = (homeSlug: string, lime: string) => {
-      getCityDetails(homeSlug)
-        .then(data => {
-          const urbanPath = data['_links']['city:urban_area'].href
-          if (!urbanPath) {
-            this.setState({ homeUrbanArea: false })
-          } else {
-            // this.setState({ homeSlug: urbanPath.href })
-            this.getCityScores('home', urbanPath, 'scores')
-          }
-        })
-      getCityDetails(lime)
+  getCityImages = (type: string, url: string, endpoint: string) => {
+    getSpecifiedInfo(url, endpoint)
       .then(data => {
-        const urbanPath = data['_links']['city:urban_area'].href
-        if (!urbanPath) {
-          this.setState({ desiredUrbanArea: false })
+        const image = data.photos[0].image.web
+        
+        if(type === 'home') {
+          this.setState({ homeImage: image })
         } else {
-          // this.setState({ desiredSlug: urbanPath.href })
-          this.getCityScores('desired', urbanPath, 'scores')
+          this.setState({ desiredImage: image })
         }
       })
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // getImage = () => {
-  // }
 
   render() {
 
@@ -127,7 +119,7 @@ class App extends Component<MyProps, MyState> {
 
     if (this.state.homeCityScores && this.state.desiredCityScores) {
       displayHomeCard = <Card cityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} cityPopulation={this.state.homeCityPopulation} cityImage={this.state.homeImage} />
-      displayDesiredCard = <Card cityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} cityImage={this.state.homeImage} />
+      displayDesiredCard = <Card cityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} cityImage={this.state.desiredImage} />
     }
 
     return (
