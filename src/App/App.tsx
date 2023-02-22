@@ -3,9 +3,9 @@ import './App.css';
 import Header from '../Header/Header'
 import Form from '../Form/Form'
 import Card from '../Card/Card';
-import { getCityDetails } from '../apicalls/allCitiesApiCall';
-import { createNamedExports } from 'typescript';
+import { getCityDetails, getSpecifiedInfo } from '../apicalls/allCitiesApiCall';
 import grabGeonameId from '../apicalls/geonameId'
+
 
 type MyProps = {
 
@@ -64,52 +64,56 @@ class App extends Component<MyProps, MyState> {
 
 
   // refactor
-  getCityScores = () => {
-    fetch(`${this.state.homeSlug}scores/`)
-      .then(response => response.json())
+  getCityScores = (type: string, url: string, endpoint: string) => {
+    getSpecifiedInfo(url, endpoint)
       .then(data => {
         const newScores = data.categories.reduce((acc: any, curr: any) => {
           acc[curr.name] = curr.score_out_of_10
           return acc
         }, {})
-
-        this.setState({ homeCityScores: newScores })
-      })
-      .then(() => {
-        fetch(`${this.state.desiredSlug}scores/`)
-          .then(response => response.json())
-          .then(data => {
-            const newScores = data.categories.reduce((acc: any, curr: any) => {
-              acc[curr.name] = curr.score_out_of_10
-              return acc
-            }, {})
-
-            this.setState({ desiredCityScores: newScores })
-          })
-      })
-  }
-
-  getSlug = (lemon: string, lime: string) => {
-    getCityDetails(lemon)
-      .then(data => {
-        if (!data['_links']['city:urban_area']) {
-          this.setState({ homeUrbanArea: false })
+        if(type === 'home') {
+          this.setState({ homeCityScores: newScores })
         } else {
-          this.setState({ homeSlug: data['_links']['city:urban_area'].href })
+          this.setState({ desiredCityScores: newScores })
         }
       })
-      .then(() => {
-        getCityDetails(lime)
-          .then(data => {
-            if (!data['_links']['city:urban_area']) {
-              this.setState({ desiredUrbanArea: false })
-            } else {
-              this.setState({ desiredSlug: data['_links']['city:urban_area'].href })
-            }
-          })
-          .then(() => this.getCityScores())
+  }
+
+  getSlug = (homeSlug: string, lime: string) => {
+      getCityDetails(homeSlug)
+        .then(data => {
+          const urbanPath = data['_links']['city:urban_area']
+          if (!urbanPath) {
+            this.setState({ homeUrbanArea: false })
+          } else {
+            this.setState({ homeSlug: urbanPath.href })
+            this.getCityScores('home', urbanPath.href, 'scores')
+          }
+        })
+      getCityDetails(lime)
+      .then(data => {
+        const urbanPath = data['_links']['city:urban_area']
+        if (!urbanPath) {
+          this.setState({ desiredUrbanArea: false })
+        } else {
+          this.setState({ desiredSlug: urbanPath.href })
+          this.getCityScores('desired', urbanPath.href, 'scores')
+        }
       })
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // getImage = () => {
   // }
