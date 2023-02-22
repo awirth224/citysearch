@@ -111,28 +111,28 @@ class App extends Component<MyProps, MyState> {
       })
   }
 
+
+  checkScores = () => {
+     if (this.state.homeSlug && this.state.desiredSlug) {
+      return <div>
+        <Card cityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} 
+        cityPopulation={this.state.homeCityPopulation} cityImage={this.state.homeImage} />
+        <Card cityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} cityImage={this.state.homeImage} />
+       </div>
+    }
+  }
   // getImage = () => {
   // }
 
   render() {
-
-    let displayHomeCard: any;
-    let displayDesiredCard: any;
-
     // combine properties in state so we only have to pass in 1-2 props
-
-    if (this.state.homeCityScores && this.state.desiredCityScores) {
-      displayHomeCard = <Card cityInfo={this.state.homeCityScores} cityName={this.state.homeCityName} cityPopulation={this.state.homeCityPopulation} cityImage={this.state.homeImage} />
-      displayDesiredCard = <Card cityInfo={this.state.desiredCityScores} cityName={this.state.desiredCityName} cityPopulation={this.state.desiredCityPopulation} cityImage={this.state.homeImage} />
-    }
 
     return (
       <main className='app'>
         <Header />
         <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} />
         <div className='display-area'>
-          {displayHomeCard}
-          {displayDesiredCard}
+          {this.checkScores()}
         </div>
       </main>
     )
