@@ -4,7 +4,6 @@ import Header from '../Header/Header'
 import Form from '../Form/Form'
 import Card from '../Card/Card';
 import { getCityDetails } from '../apicalls/allCitiesApiCall';
-import { createNamedExports } from 'typescript';
 import grabGeonameId from '../apicalls/geonameId'
 
 type MyProps = {
