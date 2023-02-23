@@ -91,7 +91,9 @@ class Form extends Component<MyProps, MyState> {
                     <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
                 </div>
                 {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
-               <Link to='/cities'>  <button onClick={() => this.handleClick()} className='search'>Search</button> </Link>
+                <Link to='/cities' tabIndex={-1}>
+                    <button onClick={() => this.handleClick()} className='search'>Search</button>
+                </Link>
             </form>
           </div>
         )
