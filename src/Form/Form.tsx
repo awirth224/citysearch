@@ -12,6 +12,7 @@ type MyProps = {
     handleCallback: Function;  
     homeUrbanArea: boolean;  
     desiredUrbanArea: boolean;
+    urbanAreas: any;
 }
 
 type MyState = {
@@ -30,23 +31,12 @@ class Form extends Component<MyProps, MyState> {
         desiredCityNames: [],
     }
 
-    handleChange = (e: any) => {
-        const name: string = e.target.name
-        const value: string = e.target.value
-
-        if (name === 'homeCity') {
-            searchFetch(value).then(data => {
-                const allCities = data["_embedded"]["city:search-results"]
-                const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({homeCity: value, homeCityNames: searchedCityNames })
-            })
-        } else if (name === 'desiredCity') {
-            searchFetch(value).then(data => {
-                const allCities = data["_embedded"]["city:search-results"]
-                const searchedCityNames = this.getUserOptions(allCities)
-                this.setState({desiredCity: value, desiredCityNames: searchedCityNames })
-            })
-        }
+    handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+        const { name, value } = e.currentTarget;
+        this.setState(prevState => ({
+          ...prevState,
+          [name]: value,
+        }))
     }
 
     getUserOptions = (cities: []) => {
@@ -57,9 +47,9 @@ class Form extends Component<MyProps, MyState> {
         return allResults
     }
 
-    switchDataList = (key: keyof MyState) => {
-            const dropDown = this.state[key].map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
-            return dropDown
+    createDatalist = () => {
+        const dropDown = this.props.urbanAreas.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
+        return dropDown
     }
 
     handleClick = () => {
@@ -82,13 +72,15 @@ class Form extends Component<MyProps, MyState> {
                 <div className='input-container'>
                     <label>Starting City</label>
                     <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required/>
-                    <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist>
+                    {/* <datalist id='listOne'>{this.switchDataList('homeCityNames')}</datalist> */}
+                    <datalist id='listOne'>{this.createDatalist()}</datalist>
                 </div>
                 {!this.props.homeUrbanArea && <h2>Please enter a valid city</h2>}
                 <div className='input-container'>
                     <label>Desired City</label>
                     <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required/>
-                    <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
+                    {/* <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist> */}
+                    <datalist id='listTwo'>{this.createDatalist()}</datalist>
                 </div>
                 {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
                 <Link to='/cities' tabIndex={-1}>
