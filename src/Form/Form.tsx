@@ -6,6 +6,7 @@ import {
 } from '../apicalls/allCitiesApiCall';
 import getSingleCity from "../apicalls/singleCityApiCall";
 import grabGeonameId from "../apicalls/geonameId";
+import {Link} from 'react-router-dom'
 
 type MyProps = {
     handleCallback: Function;  
@@ -61,8 +62,7 @@ class Form extends Component<MyProps, MyState> {
             return dropDown
     }
 
-    handleClick = (e:any) => {
-        e.preventDefault()
+    handleClick = () => {
         
         const homeCityObject = this.state.homeCityNames.find((city: { fullName: string, href: string }) =>  city.fullName === this.state.homeCity)
         const homeCityURL = homeCityObject.href
@@ -72,6 +72,7 @@ class Form extends Component<MyProps, MyState> {
 
         this.props.handleCallback(homeCityURL, desiredCityURL)
         // this.props.homeSlug === "" && <h2>Please choose valid city</h2>
+        
     }
 
     render() {
@@ -90,7 +91,7 @@ class Form extends Component<MyProps, MyState> {
                     <datalist id='listTwo'>{this.switchDataList('desiredCityNames')}</datalist>
                 </div>
                 {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
-                <button onClick={(e) => this.handleClick(e)} className='search'>Search</button>
+               <Link to='/cities'>  <button onClick={() => this.handleClick()} className='search'>Search</button> </Link>
             </form>
           </div>
         )

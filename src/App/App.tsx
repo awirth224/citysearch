@@ -8,6 +8,7 @@ import {
   getSpecifiedInfo
 } from '../apicalls/allCitiesApiCall';
 import grabGeonameId from '../apicalls/geonameId'
+import { Route , NavLink } from 'react-router-dom'; 
 
 
 type MyProps = {
@@ -112,13 +113,34 @@ class App extends Component<MyProps, MyState> {
         }
       })
   }
+  clearState = () => {
+    this.setState({
+    homeURL: '',
+    desiredURL: '',
+    homeUrbanArea: true,
+    desiredUrbanArea: true,
+    homeImage: '',
+    desiredImage: '',
+    homeCityScores: [],
+    desiredCityScores: [],
+    homeCityName: '',
+    homeCityPopulation: 0,
+    desiredCityName: '',
+    desiredCityPopulation: 0
+    })
+   
+  }
 
   render() {
     return (
       <main className='app'>
         <Header />
-        <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} />
+       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} /> } /> 
+
+        <Route exact path='/cities' render={()=>{
+          return(
         <div className='display-area'>
+         <NavLink to='/'><button className='home-btn' onClick={() => this.clearState()}> Home </button> </NavLink> 
           <Card 
             cityInfo={this.state.homeCityScores} 
             cityName={this.state.homeCityName} 
@@ -132,6 +154,13 @@ class App extends Component<MyProps, MyState> {
             cityImage={this.state.desiredImage}
           />
         </div>
+
+
+
+          )
+        }}
+        />
+
       </main>
     )
   }
