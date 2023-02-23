@@ -5,7 +5,10 @@ import Form from '../Form/Form'
 import Card from '../Card/Card';
 import { 
   getCityDetails, 
-  getSpecifiedInfo
+  // getFullName, 
+  getSpecifiedInfo,
+  urbanFetch,
+  getFullName
 } from '../apicalls/allCitiesApiCall';
 import grabGeonameId from '../apicalls/geonameId'
 import { Route , NavLink } from 'react-router-dom'; 
@@ -28,6 +31,7 @@ type MyState = {
   homeCityPopulation: number,
   desiredCityName: string,
   desiredCityPopulation: number
+  urbanState: [],
 }
 
 class App extends Component<MyProps, MyState> {
@@ -43,7 +47,26 @@ class App extends Component<MyProps, MyState> {
     homeCityName: '',
     homeCityPopulation: 0,
     desiredCityName: '',
-    desiredCityPopulation: 0
+    desiredCityPopulation: 0,
+    urbanState: []
+  }
+
+  componentDidMount(): void {
+    const urbanData: any = [];
+    urbanFetch()
+      .then(data => {
+        data['_links']['ua:item'].forEach((city: {href: string, name: string}) => {
+          getFullName(city.href)
+          .then(data => {
+            const obj: {[key: string]: string} = {}
+
+            obj.href = city.href
+            obj.fullName = data['full_name']
+            urbanData.push(obj)
+            this.setState({ urbanState: urbanData})
+          })
+        })
+      })
   }
 
   handleCallback = (param: string, secParam: string) => {
