@@ -31,7 +31,7 @@ type MyState = {
   homeCityPopulation: number,
   desiredCityName: string,
   desiredCityPopulation: number
-  urbanState: [],
+  urbanAreas: [],
 }
 
 class App extends Component<MyProps, MyState> {
@@ -48,7 +48,7 @@ class App extends Component<MyProps, MyState> {
     homeCityPopulation: 0,
     desiredCityName: '',
     desiredCityPopulation: 0,
-    urbanState: []
+    urbanAreas: []
   }
 
   componentDidMount(): void {
@@ -63,7 +63,7 @@ class App extends Component<MyProps, MyState> {
             obj.href = city.href
             obj.fullName = data['full_name']
             urbanData.push(obj)
-            this.setState({ urbanState: urbanData})
+            this.setState({ urbanAreas: urbanData})
           })
         })
       })
@@ -158,7 +158,7 @@ class App extends Component<MyProps, MyState> {
     return (
       <main className='app'>
         <Header />
-       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} /> } /> 
+       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} urbanAreas={this.state.urbanAreas} /> } /> 
 
         <Route exact path='/cities' render={()=>{
           return(
