@@ -6,7 +6,6 @@ const searchFetch = (cityName?: string) => {
     .then(response => response.json())
 };
 
-
 const getCityDetails = (url: string) => {
     return fetch(url)
     .then(response => response.json())
@@ -17,4 +16,14 @@ const getSpecifiedInfo = (url:string , endpoint: string) => {
     .then(response => response.json())
 }
 
-export { searchFetch, getCityDetails , getSpecifiedInfo};
+const urbanFetch = () => {
+    return fetch('https://api.teleport.org/api/urban_areas/')
+    .then(res => res.json())
+}
+
+const getFullName = (url: string) => {
+    return fetch(url)
+    .then(res => res.json())
+}
+
+export { searchFetch, getCityDetails , getSpecifiedInfo, urbanFetch, getFullName };
