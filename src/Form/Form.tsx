@@ -39,14 +39,6 @@ class Form extends Component<MyProps, MyState> {
         }))
     }
 
-    getUserOptions = (cities: []) => {
-        const allResults: {}[] = cities.map(city => ({
-            href: city["_links"]["city:item"]["href"],
-            fullName: city["matching_full_name"]
-        }))
-        return allResults
-    }
-
     createDatalist = () => {
         const dropDown = this.props.urbanAreas.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
         return dropDown
