@@ -4,19 +4,11 @@ import Header from '../Header/Header'
 import Form from '../Form/Form'
 import Card from '../Card/Card';
 import { 
-  getCityDetails, 
-  // getFullName, 
-  getSpecifiedInfo,
   urbanFetch,
-  getFullName
+  getFullName,
+  getSpecifiedInfo,
 } from '../apicalls/allCitiesApiCall';
-import grabGeonameId from '../apicalls/geonameId'
 import { Route , NavLink } from 'react-router-dom'; 
-
-
-type MyProps = {
-
-}
 
 type MyState = {
   homeURL: string,
@@ -34,7 +26,7 @@ type MyState = {
   urbanAreas: [],
 }
 
-class App extends Component<MyProps, MyState> {
+class App extends Component<{}, MyState> {
   state: MyState = {
     homeURL: '',
     desiredURL: '',
@@ -70,42 +62,20 @@ class App extends Component<MyProps, MyState> {
   }
 
   handleCallback = (param: string, secParam: string) => {
-
-    grabGeonameId(param)
-      .then(data => {
-        this.setState({ homeURL: param, homeCityName: data.name, homeCityPopulation: data.population })
-      })
-
-    grabGeonameId(secParam)
-      .then(data => {
-        this.setState({ desiredURL: secParam, desiredCityName: data.name, desiredCityPopulation: data.population })
-      })
-
-    this.getSlug(param, secParam)
+    this.setState({ homeCityName: param, desiredCityName: secParam})
+    this.getUrbanPath('home', param)
+    this.getUrbanPath('desired', secParam)
   }
 
-  getSlug = (homeSlug: string, lime: string) => {
-    getCityDetails(homeSlug)
-      .then(data => {
-        const urbanPath = data['_links']['city:urban_area'].href
-        if (!urbanPath) {
-          this.setState({ homeUrbanArea: false })
-        } else {
-          this.getCityScores('home', urbanPath, 'scores')
-          this.getCityImages('home', urbanPath, 'images')
-        }
-      })
-    getCityDetails(lime)
-      .then(data => {
-        const urbanPath = data['_links']['city:urban_area'].href
-        
-        if (!urbanPath) {
-          this.setState({ desiredUrbanArea: false })
-        } else {
-          this.getCityScores('desired', urbanPath, 'scores')
-          this.getCityImages('desired', urbanPath, 'images')
-        }
-      })
+  getUrbanPath = (type: string, lemon: string) => {
+    const cityDetails = this.state.urbanAreas.find((city: { fullName: string, href: string }) => city.fullName === lemon)
+    if(type === 'home') {
+      this.getCityScores('home', cityDetails!['href'], 'scores')
+      this.getCityImages('home', cityDetails!['href'], 'images')
+    } else {
+      this.getCityScores('desired', cityDetails!['href'], 'scores')
+      this.getCityImages('desired', cityDetails!['href'], 'images')
+    }
   }
 
   getCityScores = (type: string, url: string, endpoint: string) => {
@@ -151,7 +121,6 @@ class App extends Component<MyProps, MyState> {
     desiredCityName: '',
     desiredCityPopulation: 0
     })
-   
   }
 
   render() {
