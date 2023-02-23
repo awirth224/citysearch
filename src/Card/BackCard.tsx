@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { Chart } from "chart.js/auto";
 
 
 interface BackProps {
@@ -7,11 +8,25 @@ interface BackProps {
     //change to type function
 }
 
+type Config = {
+    type: string;
+}
+ 
+
 const BackCard: FC<BackProps> = props => {
     return (
         <div>
             <section className="card-back" >
-                <section className="info-display">
+                <div className="chart-container">
+           
+                </div>   
+                <button onClick={() => props.clickBackButton()}>Back</button>
+            </section>
+        </div>
+    )
+}
+
+/*          <section className="info-display">
                     <h2> Cost of living: </h2>
                     <div className="info-wrapper">{props.cityInfo['Cost of Living']}</div>
                 </section>
@@ -42,11 +57,6 @@ const BackCard: FC<BackProps> = props => {
                 <section className="info-display">
                     <h2> HealthCare: </h2>
                     <div className="info-wrapper">	{props.cityInfo.Healthcare} </div>
-                </section>
-                <button onClick={() => props.clickBackButton()}>Back</button>
-            </section>
-        </div>
-    )
-}
+                    */
 
 export default BackCard
