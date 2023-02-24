@@ -37,7 +37,7 @@ const BackCard: React.FC<BackProps> = ({ cityInfo }) => {
                     <h2> Education: </h2>
                     <div className="info-wrapper"> {cityInfo.Education} </div>
                 </section>
-                <section className="info-display">
+                <section className="info-display bottom">
                     <h2> HealthCare: </h2>
                     <div className="info-wrapper">	{cityInfo.Healthcare} </div>
                 </section>
