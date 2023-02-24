@@ -1,5 +1,24 @@
 {
-  "name": "Using fixtures to represent data",
-  "email": "hello@cypress.io",
-  "body": "Fixtures are a great way to mock data for responses to routes"
+"_links": {
+  "curies": [],
+    "self": {},
+    "ua:item": [
+    {
+    "href": "https://api.teleport.org/api/urban_areas/slug:aarhus/",
+    "name": "Aarhus"
+    },
+    {
+    "href": "https://api.teleport.org/api/urban_areas/slug:adelaide/",
+    "name": "Adelaide"
+    },
+    {
+    "href": "https://api.teleport.org/api/urban_areas/slug:albuquerque/",
+    "name": "Albuquerque"
+    },
+    {
+    "href": "https://api.teleport.org/api/urban_areas/slug:almaty/",
+    "name": "Almaty"
+    }
+    ]
+  }
 }
