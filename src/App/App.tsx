@@ -127,32 +127,31 @@ class App extends Component<{}, MyState> {
     return (
       <main className='app'>
         <Header />
-       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} urbanAreas={this.state.urbanAreas} /> } /> 
+        <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} urbanAreas={this.state.urbanAreas} /> } /> 
 
         <Route exact path='/cities' render={()=>{
           return(
-        <div className='display-area'>
-         <NavLink to='/'><button className='home-btn' onClick={() => this.clearState()}> Home </button> </NavLink> 
-          <Card 
-            cityInfo={this.state.homeCityScores} 
-            cityName={this.state.homeCityName} 
-            cityPopulation={this.state.homeCityPopulation} 
-            cityImage={this.state.homeImage}
-          />
-          <Card 
-            cityInfo={this.state.desiredCityScores} 
-            cityName={this.state.desiredCityName} 
-            cityPopulation={this.state.desiredCityPopulation} 
-            cityImage={this.state.desiredImage}
-          />
-        </div>
-
-
-
+            <div className='display-area'>
+              <div className='cards-container'>
+                <Card 
+                  cityInfo={this.state.homeCityScores} 
+                  cityName={this.state.homeCityName} 
+                  cityPopulation={this.state.homeCityPopulation} 
+                  cityImage={this.state.homeImage}
+                />
+                <Card 
+                  cityInfo={this.state.desiredCityScores} 
+                  cityName={this.state.desiredCityName} 
+                  cityPopulation={this.state.desiredCityPopulation} 
+                  cityImage={this.state.desiredImage}
+                />
+              </div>
+              <div>
+                <NavLink to='/'><button className='home-btn' onClick={() => this.clearState()}> Home </button> </NavLink> 
+              </div>
+            </div>
           )
-        }}
-        />
-
+        }}/>
       </main>
     )
   }

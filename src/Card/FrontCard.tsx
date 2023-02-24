@@ -1,21 +1,18 @@
-import React, { FC } from 'react'
-
+import React from 'react';
+import './FrontCard.css';
 
 interface FrontProps {
     cityName: string;
-    cityPopulation: number;
+    cityPopulation?: number;
     cityImage: string;
-    clickFrontButton: any;
 }
 
-const FrontCard: FC<FrontProps> = props => {
+const FrontCard: React.FC<FrontProps> = ({ cityName, cityPopulation, cityImage }) => {
     return (
         <div>
             <section className="card-front">
-                <img src={props.cityImage} alt={'test'} />
-                <h2>City:  {props.cityName}</h2>
-                <h2> Population:  {props.cityPopulation.toLocaleString('en-US')}</h2>
-                <button onClick={() => props.clickFrontButton()}>City Info</button>
+                <img src={cityImage} alt={'test'} />
+                <h2>{cityName}</h2>
             </section>
         </div>
     )
