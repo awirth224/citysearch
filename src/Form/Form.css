@@ -25,6 +25,7 @@ input {
 
 .search {
   background-color: #0081C9;
+  border: none;
   color: white;
   height: 5vh;
   margin: 5% 0% 0% 25%;
