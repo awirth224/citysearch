@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { createNamedExports } from "typescript";
+import React from "react";
 import './Card.css';
 import FrontCard from "./FrontCard";
 import BackCard from "./BackCard";
@@ -11,43 +10,14 @@ type CardProps = {
 	cityImage: string;
 }
 
-type CardState = {
-	frontClicked: boolean;
-	backClicked: boolean;
-}
+const Card: React.FC<CardProps> = ({ cityInfo, cityName, cityPopulation, cityImage }) => {
 
-class Card extends Component<CardProps, CardState> {
-
-	state: CardState = {
-		frontClicked: false,
-		backClicked: true
-	}
-
-
-	// maybe refactor flip methods to one?
-	clickFrontButton = () => {
-		this.setState({ frontClicked: true, backClicked: false })
-	}
-
-	clickBackButton = () => {
-		this.setState({ backClicked: true, frontClicked: false })
-	}
-
-	render() {
-		let cardDisplay: any;
-
-		if (this.state.backClicked) {
-			cardDisplay = <FrontCard cityName={this.props.cityName} cityPopulation={this.props.cityPopulation} cityImage={this.props.cityImage} clickFrontButton={this.clickFrontButton} />
-		} else if (this.state.frontClicked) {
-			cardDisplay = <BackCard cityInfo={this.props.cityInfo} clickBackButton={this.clickBackButton} />
-		}
-
-		return (
-			<section className="card-content" id='flip-card' >
-				{cardDisplay}
-			</section>
-		)
-	}
+	return (
+		<section className="card-content" id='flip-card' >
+			<FrontCard cityName={cityName} cityPopulation={cityPopulation} cityImage={cityImage} />
+			<BackCard cityInfo={cityInfo} />
+		</section>
+	)
 }
 
 export default Card
