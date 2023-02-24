@@ -15,6 +15,15 @@ describe('City Search site', () => {
     cy.get('form').should('be.visible')
   })
   
+  it('Should allow a user to type and submit a form', function(){
+    cy.get('form').within(() => {
+    cy.get('input[name="homeCity"]').type('Aarhus, Denmark').should('have.value', 'Aarhus, Denmark')
+    cy.get('input[name="desiredCity"]').type('Almaty, Kazakhstan').should('have.value', 'Almaty, Kazakhstan')
+    cy.get('button').click()
+    })
+    cy.url().should('eq','http://localhost:3000/cities') 
+  })
+  
 
 })
 
