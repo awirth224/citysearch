@@ -4,16 +4,11 @@ import Header from '../Header/Header'
 import Form from '../Form/Form'
 import Card from '../Card/Card';
 import { 
-  getCityDetails, 
-  getSpecifiedInfo
+  urbanFetch,
+  getFullName,
+  getSpecifiedInfo,
 } from '../apicalls/allCitiesApiCall';
-import grabGeonameId from '../apicalls/geonameId'
 import { Route , NavLink } from 'react-router-dom'; 
-
-
-type MyProps = {
-
-}
 
 type MyState = {
   homeURL: string,
@@ -28,9 +23,10 @@ type MyState = {
   homeCityPopulation: number,
   desiredCityName: string,
   desiredCityPopulation: number
+  urbanAreas: [],
 }
 
-class App extends Component<MyProps, MyState> {
+class App extends Component<{}, MyState> {
   state: MyState = {
     homeURL: '',
     desiredURL: '',
@@ -43,46 +39,43 @@ class App extends Component<MyProps, MyState> {
     homeCityName: '',
     homeCityPopulation: 0,
     desiredCityName: '',
-    desiredCityPopulation: 0
+    desiredCityPopulation: 0,
+    urbanAreas: []
+  }
+
+  componentDidMount(): void {
+    const urbanData: any = [];
+    urbanFetch()
+      .then(data => {
+        data['_links']['ua:item'].forEach((city: {href: string, name: string}) => {
+          getFullName(city.href)
+          .then(data => {
+            const obj: {[key: string]: string} = {}
+
+            obj.href = city.href
+            obj.fullName = data['full_name']
+            urbanData.push(obj)
+            this.setState({ urbanAreas: urbanData})
+          })
+        })
+      })
   }
 
   handleCallback = (param: string, secParam: string) => {
-
-    grabGeonameId(param)
-      .then(data => {
-        this.setState({ homeURL: param, homeCityName: data.name, homeCityPopulation: data.population })
-      })
-
-    grabGeonameId(secParam)
-      .then(data => {
-        this.setState({ desiredURL: secParam, desiredCityName: data.name, desiredCityPopulation: data.population })
-      })
-
-    this.getSlug(param, secParam)
+    this.setState({ homeCityName: param, desiredCityName: secParam})
+    this.getUrbanPath('home', param)
+    this.getUrbanPath('desired', secParam)
   }
 
-  getSlug = (homeSlug: string, lime: string) => {
-    getCityDetails(homeSlug)
-      .then(data => {
-        const urbanPath = data['_links']['city:urban_area'].href
-        if (!urbanPath) {
-          this.setState({ homeUrbanArea: false })
-        } else {
-          this.getCityScores('home', urbanPath, 'scores')
-          this.getCityImages('home', urbanPath, 'images')
-        }
-      })
-    getCityDetails(lime)
-      .then(data => {
-        const urbanPath = data['_links']['city:urban_area'].href
-        
-        if (!urbanPath) {
-          this.setState({ desiredUrbanArea: false })
-        } else {
-          this.getCityScores('desired', urbanPath, 'scores')
-          this.getCityImages('desired', urbanPath, 'images')
-        }
-      })
+  getUrbanPath = (type: string, lemon: string) => {
+    const cityDetails = this.state.urbanAreas.find((city: { fullName: string, href: string }) => city.fullName === lemon)
+    if(type === 'home') {
+      this.getCityScores('home', cityDetails!['href'], 'scores')
+      this.getCityImages('home', cityDetails!['href'], 'images')
+    } else {
+      this.getCityScores('desired', cityDetails!['href'], 'scores')
+      this.getCityImages('desired', cityDetails!['href'], 'images')
+    }
   }
 
   getCityScores = (type: string, url: string, endpoint: string) => {
@@ -128,14 +121,13 @@ class App extends Component<MyProps, MyState> {
     desiredCityName: '',
     desiredCityPopulation: 0
     })
-   
   }
 
   render() {
     return (
       <main className='app'>
         <Header />
-       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} /> } /> 
+       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} urbanAreas={this.state.urbanAreas} /> } /> 
 
         <Route exact path='/cities' render={()=>{
           return(

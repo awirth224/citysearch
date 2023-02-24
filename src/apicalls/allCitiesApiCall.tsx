@@ -1,15 +1,13 @@
 import React from "react";
 
-const searchFetch = (cityName?: string) => {
-    const encodedName: string = encodeURIComponent(cityName || "")
-    return fetch(`https://api.teleport.org/api/cities/?search=${encodedName}&limit=25`)
-    .then(response => response.json())
-};
+const urbanFetch = () => {
+    return fetch('https://api.teleport.org/api/urban_areas/')
+    .then(res => res.json())
+}
 
-
-const getCityDetails = (url: string) => {
+const getFullName = (url: string) => {
     return fetch(url)
-    .then(response => response.json())
+    .then(res => res.json())
 }
 
 const getSpecifiedInfo = (url:string , endpoint: string) => {
@@ -17,4 +15,4 @@ const getSpecifiedInfo = (url:string , endpoint: string) => {
     .then(response => response.json())
 }
 
-export { searchFetch, getCityDetails , getSpecifiedInfo};
+export { urbanFetch, getFullName, getSpecifiedInfo };
