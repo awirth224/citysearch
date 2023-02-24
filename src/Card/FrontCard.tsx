@@ -13,7 +13,7 @@ const FrontCard: FC<FrontProps> = props => {
         <div>
             <section className="card-front">
                 <img src={props.cityImage} alt={'test'} />
-                <h2>City:  {props.cityName}</h2>
+                <h2>{props.cityName}</h2>
                 <h2> Population:  {props.cityPopulation.toLocaleString('en-US')}</h2>
                 <button onClick={() => props.clickFrontButton()}>City Info</button>
             </section>
