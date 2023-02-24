@@ -3,12 +3,12 @@ import './App.css';
 import Header from '../Header/Header'
 import Form from '../Form/Form'
 import Card from '../Card/Card';
-import { 
+import {
   urbanFetch,
   getFullName,
   getSpecifiedInfo,
 } from '../apicalls/allCitiesApiCall';
-import { Route , NavLink } from 'react-router-dom'; 
+import { Route, NavLink } from 'react-router-dom';
 
 type MyState = {
   homeURL: string,
@@ -47,29 +47,29 @@ class App extends Component<{}, MyState> {
     const urbanData: any = [];
     urbanFetch()
       .then(data => {
-        data['_links']['ua:item'].forEach((city: {href: string, name: string}) => {
+        data['_links']['ua:item'].forEach((city: { href: string, name: string }) => {
           getFullName(city.href)
-          .then(data => {
-            const obj: {[key: string]: string} = {}
+            .then(data => {
+              const obj: { [key: string]: string } = {}
 
-            obj.href = city.href
-            obj.fullName = data['full_name']
-            urbanData.push(obj)
-            this.setState({ urbanAreas: urbanData})
-          })
+              obj.href = city.href
+              obj.fullName = data['full_name']
+              urbanData.push(obj)
+              this.setState({ urbanAreas: urbanData })
+            })
         })
       })
   }
 
   handleCallback = (param: string, secParam: string) => {
-    this.setState({ homeCityName: param, desiredCityName: secParam})
+    this.setState({ homeCityName: param, desiredCityName: secParam })
     this.getUrbanPath('home', param)
     this.getUrbanPath('desired', secParam)
   }
 
   getUrbanPath = (type: string, lemon: string) => {
     const cityDetails = this.state.urbanAreas.find((city: { fullName: string, href: string }) => city.fullName === lemon)
-    if(type === 'home') {
+    if (type === 'home') {
       this.getCityScores('home', cityDetails!['href'], 'scores')
       this.getCityImages('home', cityDetails!['href'], 'images')
     } else {
@@ -85,8 +85,7 @@ class App extends Component<{}, MyState> {
           acc[curr.name] = curr.score_out_of_10
           return acc
         }, {})
-        console.log(newScores)
-        if(type === 'home') {
+        if (type === 'home') {
           this.setState({ homeCityScores: newScores })
         } else {
           this.setState({ desiredCityScores: newScores })
@@ -98,8 +97,8 @@ class App extends Component<{}, MyState> {
     getSpecifiedInfo(url, endpoint)
       .then(data => {
         const image = data.photos[0].image.web
-        
-        if(type === 'home') {
+
+        if (type === 'home') {
           this.setState({ homeImage: image })
         } else {
           this.setState({ desiredImage: image })
@@ -108,18 +107,18 @@ class App extends Component<{}, MyState> {
   }
   clearState = () => {
     this.setState({
-    homeURL: '',
-    desiredURL: '',
-    homeUrbanArea: true,
-    desiredUrbanArea: true,
-    homeImage: '',
-    desiredImage: '',
-    homeCityScores: [],
-    desiredCityScores: [],
-    homeCityName: '',
-    homeCityPopulation: 0,
-    desiredCityName: '',
-    desiredCityPopulation: 0
+      homeURL: '',
+      desiredURL: '',
+      homeUrbanArea: true,
+      desiredUrbanArea: true,
+      homeImage: '',
+      desiredImage: '',
+      homeCityScores: [],
+      desiredCityScores: [],
+      homeCityName: '',
+      homeCityPopulation: 0,
+      desiredCityName: '',
+      desiredCityPopulation: 0
     })
   }
 
@@ -127,25 +126,25 @@ class App extends Component<{}, MyState> {
     return (
       <main className='app'>
         <Header />
-       <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} urbanAreas={this.state.urbanAreas} /> } /> 
+        <Route exact path='/' render={() => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} urbanAreas={this.state.urbanAreas} />} />
 
-        <Route exact path='/cities' render={()=>{
-          return(
-        <div className='display-area'>
-         <NavLink to='/'><button className='home-btn' onClick={() => this.clearState()}> Home </button> </NavLink> 
-          <Card 
-            cityInfo={this.state.homeCityScores} 
-            cityName={this.state.homeCityName} 
-            cityPopulation={this.state.homeCityPopulation} 
-            cityImage={this.state.homeImage}
-          />
-          <Card 
-            cityInfo={this.state.desiredCityScores} 
-            cityName={this.state.desiredCityName} 
-            cityPopulation={this.state.desiredCityPopulation} 
-            cityImage={this.state.desiredImage}
-          />
-        </div>
+        <Route exact path='/cities' render={() => {
+          return (
+            <div className='display-area'>
+              <NavLink to='/'><button className='home-btn' onClick={() => this.clearState()}> Home </button> </NavLink>
+              <Card
+                cityInfo={this.state.homeCityScores}
+                cityName={this.state.homeCityName}
+                cityPopulation={this.state.homeCityPopulation}
+                cityImage={this.state.homeImage}
+              />
+              <Card
+                cityInfo={this.state.desiredCityScores}
+                cityName={this.state.desiredCityName}
+                cityPopulation={this.state.desiredCityPopulation}
+                cityImage={this.state.desiredImage}
+              />
+            </div>
 
 
 
