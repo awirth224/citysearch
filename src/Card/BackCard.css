@@ -10,7 +10,7 @@
 
 .info-wrapper {
     display: flex;
-    font-size: large;
+    font-size: medium;
     justify-content: flex-end;
     padding: 1.5%;
     width: 40%;
@@ -22,7 +22,8 @@
     align-items: center;
 }
 
-h2  {
+h2 {
+    color: #5BC0F8;
     font-size: 14px;
 }
 
