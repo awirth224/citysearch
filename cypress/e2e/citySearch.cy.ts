@@ -1,9 +1,8 @@
 describe('City Search site', () => {
   beforeEach(() => {
-    cy.intercept()
-    
-    
-    
+    cy.intercept('GET','https://api.teleport.org/api/urban_areas/',
+    { fixture: 'example.json' } )
+
     cy.visit('http://localhost:3000/')
     
   })
@@ -11,6 +10,11 @@ describe('City Search site', () => {
   it('Should display a title', function() {
     cy.get('.logo').should('contain', 'CitySearch')
   })
+  
+  it('Should have a form visible', function() {
+    cy.get('form').should('be.visible')
+  })
+  
 
 })
 
