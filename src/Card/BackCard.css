@@ -1,20 +1,19 @@
 .info-display {
+    align-items: center;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: 3%;
+    justify-content: space-around;
+    margin: 0% 0% 1% 0%;
     width: 90%;
-    margin-bottom: 3%;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
 }
 
 .info-wrapper {
     display: flex;
-    justify-content: center;
-    width: 40%;
+    font-size: large;
+    justify-content: flex-end;
     padding: 1.5%;
-    font-size: x-large;
+    width: 40%;
 }
 
 .card-back {
@@ -25,4 +24,8 @@
 
 h2  {
     font-size: 14px;
+}
+
+.bottom {
+    margin-bottom: 4%;
 }
