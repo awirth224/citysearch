@@ -1,49 +1,45 @@
-import React, { FC } from 'react'
-
+import React from 'react'
 
 interface BackProps {
     cityInfo: any;
-    clickBackButton: any;
-    //change to type function
 }
 
-const BackCard: FC<BackProps> = props => {
+const BackCard: React.FC<BackProps> = ({ cityInfo }) => {
     return (
         <div>
             <section className="card-back" >
                 <section className="info-display">
                     <h2> Cost of living: </h2>
-                    <div className="info-wrapper">{props.cityInfo['Cost of Living']}</div>
+                    <div className="info-wrapper">{cityInfo['Cost of Living']}</div>
                 </section>
                 <section className="info-display">
                     <h2> Environmental Quality: </h2>
-                    <div className="info-wrapper">{props.cityInfo['Environmental Quality']} </div>
+                    <div className="info-wrapper">{cityInfo['Environmental Quality']} </div>
                 </section>
                 <section className="info-display">
                     <h2> Safety: </h2>
-                    <div className="info-wrapper"> {props.cityInfo.Safety} </div>
+                    <div className="info-wrapper"> {cityInfo.Safety} </div>
                 </section>
                 <section className="info-display">
                     <h2> Economy: </h2>
-                    <div className="info-wrapper">{props.cityInfo.Economy}</div>
+                    <div className="info-wrapper">{cityInfo.Economy}</div>
                 </section>
                 <section className="info-display">
                     <h2> Commute: </h2>
-                    <div className="info-wrapper">{props.cityInfo.Commute} </div>
+                    <div className="info-wrapper">{cityInfo.Commute} </div>
                 </section>
                 <section className="info-display">
                     <h2> Housing: </h2>
-                    <div className="info-wrapper">{props.cityInfo.Housing}</div>
+                    <div className="info-wrapper">{cityInfo.Housing}</div>
                 </section>
                 <section className="info-display">
                     <h2> Education: </h2>
-                    <div className="info-wrapper"> {props.cityInfo.Education} </div>
+                    <div className="info-wrapper"> {cityInfo.Education} </div>
                 </section>
                 <section className="info-display">
                     <h2> HealthCare: </h2>
-                    <div className="info-wrapper">	{props.cityInfo.Healthcare} </div>
+                    <div className="info-wrapper">	{cityInfo.Healthcare} </div>
                 </section>
-                <button onClick={() => props.clickBackButton()}>Back</button>
             </section>
         </div>
     )
