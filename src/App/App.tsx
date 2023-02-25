@@ -85,7 +85,7 @@ class App extends Component<{}, MyState> {
           acc[curr.name] = curr.score_out_of_10
           return acc
         }, {})
-        console.log(newScores)
+        
         if(type === 'home') {
           this.setState({ homeCityScores: newScores })
         } else {
