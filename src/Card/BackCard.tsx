@@ -48,10 +48,11 @@ const BackCard: FC<BackProps> = props => {
                         initialValue={roundHalf(props.cityInfo['Cost of Living'])}
                         fillColor={"#FFC93C"}
                         readonly={true}
+                        fillClassName={'dollar-sign'}
                         SVGstorkeWidth={0}
                     />
                 </section>
-                <section className="info-display">
+                <section className="info-display" >
                     <h2> Environmental Quality: </h2>
                     {/* <div className="info-wrapper">{props.cityInfo['Environmental Quality']} </div> */}
                     <Rating
