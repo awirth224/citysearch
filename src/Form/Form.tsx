@@ -13,8 +13,7 @@ type MyState = {
     homeCity: string;
     desiredCity: string;
     disabled: boolean;
-    // homeCityFound: boolean;
-    // desiredCityFound: boolean;
+    error: string
 }
 
 class Form extends Component<MyProps, MyState> {
@@ -23,6 +22,7 @@ class Form extends Component<MyProps, MyState> {
         homeCity: '',
         desiredCity: '',
         disabled: true, 
+        error:''
     }
 
    
@@ -83,9 +83,8 @@ class Form extends Component<MyProps, MyState> {
                     {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
                     <Link to='/cities' tabIndex={-1}>
                       {this.state.homeCity.length && this.state.desiredCity.length
-                        
-                      ? <button  onClick={() => this.handleClick()} className='search'>Search</button>
-                      : <button disabled={this.state.disabled} onClick={() => this.handleClick()} className='search'>Search</button>
+                         ? <button  onClick={() => this.handleClick()} className='search'>Search</button>
+                         : <button disabled={this.state.disabled} onClick={() => this.handleClick()} className='search'>Search </button>
                       }
                     </Link>
                 </form>
