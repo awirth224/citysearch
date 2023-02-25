@@ -7,7 +7,7 @@ interface FrontProps {
     cityImage: string;
 }
 
-const FrontCard: React.FC<FrontProps> = ({ cityName, cityPopulation, cityImage }) => {
+const FrontCard: React.FC<FrontProps> = ({ cityName, cityImage }) => {
     return (
         <div>
             <section className="card-front">
