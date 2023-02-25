@@ -55,6 +55,10 @@ class Form extends Component<MyProps, MyState> {
     }
 
     render() {
+        const searchButton = this.state.homeCity.length && this.state.desiredCity.length
+        ? <button  onClick={() => this.handleClick()} className='search'>Search</button>
+        : <button disabled={this.state.disabled} className='search'>Search </button>
+
         return (
             <div className="form">
                 <form>
@@ -71,10 +75,7 @@ class Form extends Component<MyProps, MyState> {
                     </div>
                     {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
                     <Link to='/cities' tabIndex={-1}>
-                      {this.state.homeCity.length && this.state.desiredCity.length
-                         ? <button  onClick={() => this.handleClick()} className='search'>Search</button>
-                         : <button disabled={this.state.disabled} className='search'>Search </button>
-                      }
+                      {searchButton}
                     </Link>
                 </form>
             </div>
