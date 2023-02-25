@@ -15,16 +15,12 @@ import {
 
 interface BackProps {
    cityInfo: any;
-//    clickBackButton: any;
-   //change to type function
 }
 
 
 const roundHalf = (num: number) => {
    return (Math.round(Number(((num/2)*100).toFixed(0))/50)*50)/100
  }
-
-//  const fillColor = "#ffc93c";
 
 
 interface BackProps {
@@ -43,8 +39,8 @@ const BackCard: FC<BackProps> = props => {
                         transition
                         allowFraction
                         iconsCount={5}
-                        fillIcon={<MdAttachMoney size={40} />}
-                        emptyIcon={<MdAttachMoney size={40} />}
+                        fillIcon={<MdAttachMoney size={30} />}
+                        emptyIcon={<MdAttachMoney size={30} />}
                         initialValue={roundHalf(props.cityInfo['Cost of Living'])}
                         fillColor={"#FFC93C"}
                         readonly={true}
@@ -59,8 +55,8 @@ const BackCard: FC<BackProps> = props => {
                         transition
                         allowFraction
                         iconsCount={5}
-                        fillIcon={<MdRecycling size={40} />}
-                        emptyIcon={<MdRecycling size={40} />}
+                        fillIcon={<MdRecycling size={30} />}
+                        emptyIcon={<MdRecycling size={30} />}
                         initialValue={roundHalf(props.cityInfo['Environmental Quality'])}
                         fillColor={"#FFC93C"}
                         readonly={true}
@@ -74,8 +70,8 @@ const BackCard: FC<BackProps> = props => {
                         transition
                         allowFraction
                         iconsCount={5}
-                        fillIcon={<MdLocalPolice size={40} />}
-                        emptyIcon={<MdLocalPolice size={40} />}
+                        fillIcon={<MdLocalPolice size={30} />}
+                        emptyIcon={<MdLocalPolice size={30} />}
                         initialValue={roundHalf(props.cityInfo.Safety)}
                         fillColor={"#FFC93C"}
                         readonly={true}
@@ -89,8 +85,8 @@ const BackCard: FC<BackProps> = props => {
                         transition
                         allowFraction
                         iconsCount={5}
-                        fillIcon={<MdCardTravel size={40} />}
-                        emptyIcon={<MdCardTravel size={40} />}
+                        fillIcon={<MdCardTravel size={30} />}
+                        emptyIcon={<MdCardTravel size={30} />}
                         fillColor={"#FFC93C"}
                         initialValue={roundHalf(props.cityInfo.Economy)}
                         readonly={true}
@@ -104,8 +100,8 @@ const BackCard: FC<BackProps> = props => {
                        transition
                        allowFraction
                        iconsCount={5}
-                       fillIcon={<MdOutlineCommute size={40} />}
-                       emptyIcon={<MdOutlineCommute size={40} />}
+                       fillIcon={<MdOutlineCommute size={30} />}
+                       emptyIcon={<MdOutlineCommute size={30} />}
                        initialValue={roundHalf(props.cityInfo.Commute)}
                        fillColor={"#FFC93C"}
                        readonly={true}
@@ -119,8 +115,8 @@ const BackCard: FC<BackProps> = props => {
                        transition
                        allowFraction
                        iconsCount={5}
-                       fillIcon={<MdHome size={40} />}
-                       emptyIcon={<MdHome size={40} />}
+                       fillIcon={<MdHome size={30} />}
+                       emptyIcon={<MdHome size={30} />}
                        initialValue={roundHalf(props.cityInfo.Housing)}
                        fillColor={"#FFC93C"}
                        readonly={true}
@@ -134,8 +130,8 @@ const BackCard: FC<BackProps> = props => {
                        transition
                        allowFraction
                        iconsCount={5}
-                       fillIcon={<MdModeEditOutline size={40} />}
-                       emptyIcon={<MdModeEditOutline size={40} />}
+                       fillIcon={<MdModeEditOutline size={30} />}
+                       emptyIcon={<MdModeEditOutline size={30} />}
                        initialValue={roundHalf(props.cityInfo.Education)}
                        fillColor={"#FFC93C"}
                        readonly={true}
@@ -149,8 +145,8 @@ const BackCard: FC<BackProps> = props => {
                        transition
                        allowFraction
                        iconsCount={5}
-                       fillIcon={<MdAccessible size={40} />}
-                       emptyIcon={<MdAccessible size={40} />}
+                       fillIcon={<MdAccessible size={30} />}
+                       emptyIcon={<MdAccessible size={30} />}
                        initialValue={roundHalf(props.cityInfo.Healthcare)}
                        fillColor={"#FFC93C"}
                        readonly={true}
