@@ -13,8 +13,6 @@ import { Route , NavLink } from 'react-router-dom';
 type MyState = {
   homeURL: string,
   desiredURL: string,
-  homeUrbanArea: boolean,
-  desiredUrbanArea: boolean,
   homeImage: string,
   desiredImage: string,
   homeCityScores: [],
@@ -30,8 +28,6 @@ class App extends Component<{}, MyState> {
   state: MyState = {
     homeURL: '',
     desiredURL: '',
-    homeUrbanArea: true,
-    desiredUrbanArea: true,
     homeImage: '',
     desiredImage: '',
     homeCityScores: [],
@@ -85,7 +81,7 @@ class App extends Component<{}, MyState> {
           acc[curr.name] = curr.score_out_of_10
           return acc
         }, {})
-        console.log(newScores)
+        
         if(type === 'home') {
           this.setState({ homeCityScores: newScores })
         } else {
@@ -110,8 +106,6 @@ class App extends Component<{}, MyState> {
     this.setState({
     homeURL: '',
     desiredURL: '',
-    homeUrbanArea: true,
-    desiredUrbanArea: true,
     homeImage: '',
     desiredImage: '',
     homeCityScores: [],
@@ -127,7 +121,7 @@ class App extends Component<{}, MyState> {
     return (
       <main className='app'>
         <Header />
-        <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} homeUrbanArea={this.state.homeUrbanArea} desiredUrbanArea={this.state.desiredUrbanArea} urbanAreas={this.state.urbanAreas} /> } /> 
+        <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} urbanAreas={this.state.urbanAreas} /> } /> 
 
         <Route exact path='/cities' render={()=>{
           return(
