@@ -77,41 +77,24 @@ class Form extends Component<MyProps, MyState> {
             [name]: value,
         }))
 
-        let home: any;
-        let desired: any;
-
         if (name === 'homeCity') {
             const matchingHome = this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value)
 
-            if (matchingHome === undefined) {
-                this.setState({ disabled: true })
+            if (matchingHome.fullName.length) {
+                this.setState({homeCityFound:true })
+                this.setState({homeCity: matchingHome.fullName})
             }
         }
 
         if (name === 'desiredCity') {
-            if (this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value)) {
-                this.setState({ desiredCityFound: true })
-                //desired = true
+            const matchingAway = this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value) 
+              
+            if(matchingAway.fullName.length && this.state.homeCityFound) {
+                this.setState({ desiredCityFound: true, desiredCity: matchingAway.fullName, disabled:false })
+                
             }
         }
 
-        console.log('home state', this.state.homeCityFound)
-        console.log('desired state', this.state.desiredCityFound)
-
-        if (this.state.homeCityFound && this.state.desiredCityFound) {
-            this.setState({ disabled: false })
-        } else {
-            this.setState({ disabled: true })
-        }
-
-        // if (home && desired) {
-        //     this.setState({ disabled: false })
-        // } else {
-        //     this.setState({ disabled: true })
-        // }
-
-        // console.log('homeCityFound', this.state.homeCityFound)
-        // console.log('desiredCityFound', this.state.desiredCityFound)
 
 
     }
@@ -142,7 +125,7 @@ class Form extends Component<MyProps, MyState> {
                     </div>
                     {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
                     <Link to='/cities' tabIndex={-1}>
-                        <button disabled={this.state.disabled} onClick={() => this.handleClick()} className='search'>Search</button>
+                      <button disabled={this.state.disabled} onClick={() => this.handleClick()} className='search'>Search</button>
                     </Link>
                 </form>
             </div>
