@@ -3,7 +3,6 @@ import './FrontCard.css';
 
 interface FrontProps {
     cityName: string;
-    cityPopulation?: number;
     cityImage: string;
 }
 
