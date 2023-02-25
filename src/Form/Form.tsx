@@ -80,11 +80,11 @@ class Form extends Component<MyProps, MyState> {
         let home: any;
         let desired: any;
 
-
         if (name === 'homeCity') {
-            if (this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value)) {
-                this.setState({ homeCityFound: true })
-                //home = true
+            const matchingHome = this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value)
+
+            if (matchingHome === undefined) {
+                this.setState({ disabled: true })
             }
         }
 
