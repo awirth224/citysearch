@@ -9,6 +9,7 @@ import {
   getSpecifiedInfo,
 } from '../apicalls/allCitiesApiCall';
 import { Route , NavLink } from 'react-router-dom'; 
+import CardComp from '../Card/CardComp'
 
 type MyState = {
   homeURL: string,
@@ -22,6 +23,8 @@ type MyState = {
   desiredCityName: string,
   desiredCityPopulation: number
   urbanAreas: [],
+  homeSlug: string,
+  desiredSlug: string,
 }
 
 class App extends Component<{}, MyState> {
@@ -36,7 +39,9 @@ class App extends Component<{}, MyState> {
     homeCityPopulation: 0,
     desiredCityName: '',
     desiredCityPopulation: 0,
-    urbanAreas: []
+    urbanAreas: [],
+    homeSlug: '',
+    desiredSlug: '',
   }
 
   componentDidMount(): void {
@@ -50,6 +55,7 @@ class App extends Component<{}, MyState> {
 
             obj.href = city.href
             obj.fullName = data['full_name']
+            obj.slug = data['slug']
             urbanData.push(obj)
             this.setState({ urbanAreas: urbanData})
           })
@@ -58,50 +64,54 @@ class App extends Component<{}, MyState> {
   }
 
   handleCallback = (param: string, secParam: string) => {
-    this.setState({ homeCityName: param, desiredCityName: secParam})
-    this.getUrbanPath('home', param)
-    this.getUrbanPath('desired', secParam)
+    // this.setState({ homeCityName: param, desiredCityName: secParam})
+    this.setState({ homeSlug: param, desiredSlug: secParam})
+    // this.getUrbanPath('home', param)
+    // this.getUrbanPath('desired', secParam)
   }
 
-  getUrbanPath = (type: string, lemon: string) => {
-    const cityDetails = this.state.urbanAreas.find((city: { fullName: string, href: string }) => city.fullName === lemon)
-    if(type === 'home') {
-      this.getCityScores('home', cityDetails!['href'], 'scores')
-      this.getCityImages('home', cityDetails!['href'], 'images')
-    } else {
-      this.getCityScores('desired', cityDetails!['href'], 'scores')
-      this.getCityImages('desired', cityDetails!['href'], 'images')
-    }
-  }
+  // getUrbanPath = (type: string, lemon: string) => {
+  //   const cityDetails = this.state.urbanAreas.find((city: { fullName: string, href: string, slug: string }) => city.fullName === lemon)
+  //   if(type === 'home') {
+  //     // this.setState({ homeSlug: cityDetails!['slug']})
+  //     this.getCityScores('home', cityDetails!['href'], 'scores')
+  //     this.getCityImages('home', cityDetails!['href'], 'images')
+  //   } else {
+  //     // this.setState({ desiredSlug: cityDetails!['slug']})
+  //     this.getCityScores('desired', cityDetails!['href'], 'scores')
+  //     this.getCityImages('desired', cityDetails!['href'], 'images')
+  //   }
+  // }
 
-  getCityScores = (type: string, url: string, endpoint: string) => {
-    getSpecifiedInfo(url, endpoint)
-      .then(data => {
-        const newScores = data.categories.reduce((acc: any, curr: any) => {
-          acc[curr.name] = curr.score_out_of_10
-          return acc
-        }, {})
+  // getCityScores = (type: string, url: string, endpoint: string) => {
+  //   getSpecifiedInfo(url, endpoint)
+  //     .then(data => {
+  //       const newScores = data.categories.reduce((acc: any, curr: any) => {
+  //         acc[curr.name] = curr.score_out_of_10
+  //         return acc
+  //       }, {})
         
-        if(type === 'home') {
-          this.setState({ homeCityScores: newScores })
-        } else {
-          this.setState({ desiredCityScores: newScores })
-        }
-      })
-  }
+  //       if(type === 'home') {
+  //         this.setState({ homeCityScores: newScores })
+  //       } else {
+  //         this.setState({ desiredCityScores: newScores })
+  //       }
+  //     })
+  // }
 
-  getCityImages = (type: string, url: string, endpoint: string) => {
-    getSpecifiedInfo(url, endpoint)
-      .then(data => {
-        const image = data.photos[0].image.web
+  // getCityImages = (type: string, url: string, endpoint: string) => {
+  //   getSpecifiedInfo(url, endpoint)
+  //     .then(data => {
+  //       const image = data.photos[0].image.web
         
-        if(type === 'home') {
-          this.setState({ homeImage: image })
-        } else {
-          this.setState({ desiredImage: image })
-        }
-      })
-  }
+  //       if(type === 'home') {
+  //         this.setState({ homeImage: image })
+  //       } else {
+  //         this.setState({ desiredImage: image })
+  //       }
+  //     })
+  // }
+
   clearState = () => {
     this.setState({
     homeURL: '',
@@ -123,22 +133,23 @@ class App extends Component<{}, MyState> {
         <Header />
         <Route exact path='/' render ={ () => <Form handleCallback={this.handleCallback} urbanAreas={this.state.urbanAreas} /> } /> 
 
-        <Route exact path='/cities' render={()=>{
+        <Route exact path={`/comparison/${this.state.homeSlug}+${this.state.desiredSlug}`} render={()=>{
           return(
             <div className='display-area'>
               <div className='cards-container'>
-                <Card 
-                  cityInfo={this.state.homeCityScores} 
-                  cityName={this.state.homeCityName} 
-                  cityPopulation={this.state.homeCityPopulation} 
-                  cityImage={this.state.homeImage}
+                <CardComp
+                  homeSlug={this.state.homeSlug}
+                  desiredSlug={this.state.desiredSlug}
+                  urbanAreas={this.state.urbanAreas}
+                 />
+                {/* <Card 
+                  citySlug={this.state.homeSlug}
+                  urbanAreas={this.state.urbanAreas}
                 />
                 <Card 
-                  cityInfo={this.state.desiredCityScores} 
-                  cityName={this.state.desiredCityName} 
-                  cityPopulation={this.state.desiredCityPopulation} 
-                  cityImage={this.state.desiredImage}
-                />
+                  citySlug={this.state.desiredSlug}
+                  urbanAreas={this.state.urbanAreas}
+                /> */}
               </div>
               <div>
                 <NavLink to='/'><button className='home-btn' onClick={() => this.clearState()}> Home </button> </NavLink> 

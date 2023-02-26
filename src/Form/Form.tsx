@@ -9,15 +9,15 @@ type MyProps = {
 }
 
 type MyState = {
-    homeCity: string;
-    desiredCity: string;
+    homeSlug: string;
+    desiredSlug: string;
 }
 
 class Form extends Component<MyProps, MyState> {
 
     state: MyState = {
-        homeCity: '',
-        desiredCity: '',
+        homeSlug: '',
+        desiredSlug: '',
     }
 
    
@@ -32,10 +32,12 @@ class Form extends Component<MyProps, MyState> {
 
         if (name === 'homeCity') {
             const matchingHome = this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value)
-            this.setState({ homeCity: matchingHome === undefined ? '' : matchingHome.fullName})
+            // this.setState({ homeCity: matchingHome === undefined ? '' : matchingHome.fullName})
+            this.setState({ homeSlug: matchingHome === undefined ? '' : matchingHome.slug})
         } else {
             const matchingAway = this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value) 
-            this.setState({ desiredCity: matchingAway === undefined ? '' : matchingAway.fullName})
+            // this.setState({ desiredCity: matchingAway === undefined ? '' : matchingAway.fullName})
+            this.setState({ desiredSlug: matchingAway === undefined ? '' : matchingAway.slug})
         }
     }
 
@@ -46,13 +48,13 @@ class Form extends Component<MyProps, MyState> {
     }
 
     handleClick = () => {
-        this.props.handleCallback(this.state.homeCity, this.state.desiredCity)
+        this.props.handleCallback(this.state.homeSlug, this.state.desiredSlug)
     }
 
     handleErrorClick = () => {
-        if(!this.state.homeCity && !this.state.desiredCity) {
+        if(!this.state.homeSlug && !this.state.desiredSlug) {
             swal('Both city inputs are invalid', 'Please try again!', 'error')
-        } else if(!this.state.desiredCity) {
+        } else if(!this.state.desiredSlug) {
             swal('Desired city input is invalid', 'Please try again!', 'error')
         } else {
             swal('Starting city input is invalid', 'Please try again!', 'error')
@@ -60,8 +62,8 @@ class Form extends Component<MyProps, MyState> {
     }
     
     render() {
-        const searchButton = this.state.homeCity && this.state.desiredCity
-        ? <Link to='/cities' tabIndex={-1}><button  onClick={this.handleClick} className='search'>Search</button></Link>
+        const searchButton = this.state.homeSlug && this.state.desiredSlug
+        ? <Link to={`/comparison/${this.state.homeSlug}+${this.state.desiredSlug}`} tabIndex={-1}><button  onClick={this.handleClick} className='search'>Search</button></Link>
         : <Link to='/' tabIndex={-1}><button onClick={this.handleErrorClick} className='search'>Search </button></Link>
 
         return (
