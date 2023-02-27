@@ -24,6 +24,7 @@ The purpose of this application is to enable users to compare two cities, specif
 - The ability for a user to save their searches
 
 ## GIF
+![city search](https://user-images.githubusercontent.com/110955503/221709782-410bec18-7a3c-44c3-9011-dc6ecf483471.gif)
 
 -------------------------------------------------------------------------------------------------
 ### `npm run build`
