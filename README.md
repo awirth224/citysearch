@@ -30,7 +30,10 @@ The purpose of this application is to enable users to compare two cities, specif
    ```sh
    Example: http://localhost:3000/
    ```
-   
+
+## Deployment
+[CitySearch](citysearch-q6s3hr9x3-awirth224.vercel.app)
+
 ## GIF
 ![city search](https://user-images.githubusercontent.com/110955503/221709782-410bec18-7a3c-44c3-9011-dc6ecf483471.gif)
 
@@ -46,3 +49,5 @@ The purpose of this application is to enable users to compare two cities, specif
 - The ability for a user to add an additional city (up to 4 total) to compare
 - The ability for a user to filter the categories shown on the results page
 - The ability for a user to save their searches
+
+
