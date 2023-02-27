@@ -4,45 +4,44 @@ import FrontCard from "./FrontCard";
 import BackCard from "./BackCard";
 import { getSpecifiedInfo } from '../apicalls/allCitiesApiCall';
 
-type MyProps = {
-    urbanAreas: any;
+type CardProps = {
 	citySlug: string;
 }
 
-type MyState = {
-    cityImage: string,
+type CardState = {
+  cityImage: string,
 	cityScores: [],
 	cityName: string,
 	error: string
 }
 
-class Card extends Component<MyProps, MyState> {
+class Card extends Component <CardProps, CardState> {
 
-    state: MyState = {
-        cityImage: '',
-		cityScores: [],
-		cityName: '',
-		error: '',
+    state: CardState = {
+			cityImage: '',
+			cityScores: [],
+			cityName: '',
+			error: '',
     }
 
 	componentDidMount(): void {
-		this.getCityDeets(this.props.citySlug)
+		this.makeCityDetails(this.props.citySlug)
 	}
 
-	getCityDeets = (citySlug: string) => {
-		this.getCityScores(citySlug, 'scores')
-		this.getCityImages(citySlug, 'images')
-		this.getCityName(citySlug)
+	makeCityDetails = (citySlug: string) => {
+		this.storeCityScores(citySlug, 'scores')
+		this.storeCityImages(citySlug, 'images')
+		this.storeCityName(citySlug)
 	}
 
-	getCityName = (citySlug: string) => {
+	storeCityName = (citySlug: string) => {
 		getSpecifiedInfo(citySlug)
 		.then(data => {
 			this.setState({ cityName: data['full_name'] })
 		})
 	}
 
-	getCityScores = (citySlug: string, endpoint: string) => {
+	storeCityScores = (citySlug: string, endpoint: string) => {
 		getSpecifiedInfo(citySlug, endpoint)
 		  .then(data => {
 			const newScores = data.categories.reduce((acc: any, curr: any) => {
@@ -54,7 +53,7 @@ class Card extends Component<MyProps, MyState> {
 		  })
 	}
 
-	getCityImages = (citySlug: string, endpoint: string) => {
+	storeCityImages = (citySlug: string, endpoint: string) => {
 		getSpecifiedInfo(citySlug, endpoint)
 		  .then(data => {
 			const image = data.photos[0].image.web
@@ -65,7 +64,7 @@ class Card extends Component<MyProps, MyState> {
 
 	render() {
 		return (
-			<section className="card-content" id='flip-card' >
+			<section className="card-content" >
  				<FrontCard cityName={this.state.cityName} cityImage={this.state.cityImage} />
 				<BackCard cityInfo={this.state.cityScores} />
 			</section>
