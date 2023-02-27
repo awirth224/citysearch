@@ -3,11 +3,10 @@ import './FrontCard.css';
 
 interface FrontProps {
     cityName: string;
-    cityPopulation?: number;
     cityImage: string;
 }
 
-const FrontCard: React.FC<FrontProps> = ({ cityName, cityPopulation, cityImage }) => {
+const FrontCard: React.FC<FrontProps> = ({ cityName, cityImage }) => {
     return (
        
             <section className="card-front">
