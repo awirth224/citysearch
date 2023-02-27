@@ -2,12 +2,22 @@ import React from "react";
 
 const urbanFetch = () => {
     return fetch('https://api.teleport.org/api/urban_areas/')
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Something went wrong')
+            }
+            return res.json()
+        })
 }
 
 const getFullName = (url: string) => {
     return fetch(url)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Something went wrong')
+            }
+            return res.json()
+        })
 }
 
 const getSpecifiedInfo = (slug: string, endpoint?: string) => {
