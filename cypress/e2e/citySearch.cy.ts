@@ -24,6 +24,7 @@ describe('City Search site', () => {
     cy.intercept('GET', 'https://api.teleport.org/api/urban_areas/slug:almaty/scores/', { fixture: 'desiredCityInfo' })
     cy.intercept('GET', 'https://api.teleport.org/api/urban_areas/slug:aarhus/scores/', { fixture: 'homeCityInfo' })
   })
+
   it('Should display two  cities information', () => {
     cy.intercept('GET', 'https://api.teleport.org/api/urban_areas/', { fixture: 'example.json' })
     cy.visit('http://localhost:3000/')

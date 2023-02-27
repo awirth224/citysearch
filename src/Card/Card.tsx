@@ -33,8 +33,8 @@ class Card extends Component <CardProps, CardState> {
 			.then(data => {
 				this.setState({ cityName: data['full_name'] })
 			})
-			.then(() => this.getCityScores(citySlug, 'scores'))
-			.then(() => this.getCityImages(citySlug, 'images'))
+			.then(() => this.storeCityScores(citySlug, 'scores'))
+			.then(() => this.storeCityImages(citySlug, 'images'))
 			.catch(error => {
 				this.setState({ errorMessage: error })
 			})
