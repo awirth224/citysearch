@@ -3,18 +3,18 @@ import './Form.css'
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 
-type MyProps = {
+type FormProps = {
     urbanAreas: any;
 }
 
-type MyState = {
+type FormState = {
     homeSlug: string;
     desiredSlug: string;
 }
 
-class Form extends Component<MyProps, MyState> {
+class Form extends Component<FormProps, FormState> {
 
-    state: MyState = {
+    state: FormState = {
         homeSlug: '',
         desiredSlug: '',
     }
@@ -57,8 +57,7 @@ class Form extends Component<MyProps, MyState> {
         : <Link to='/' tabIndex={-1}><button onClick={this.handleErrorClick} className='search'>Search </button></Link>
 
         return (
-            <div className="form">
-                <form>
+                <form className='form'>
                     <div className='input-container'>
                         <label>Starting City</label>
                         <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
@@ -71,8 +70,8 @@ class Form extends Component<MyProps, MyState> {
                     </div>
                       {searchButton}
                 </form>
-            </div>
         )
+         
     }
 }
 
