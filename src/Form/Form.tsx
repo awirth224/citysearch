@@ -1,31 +1,23 @@
 import React, { Component } from "react";
 import './Form.css'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
-type MyProps = {
-    handleCallback: Function;
-    homeUrbanArea: boolean;
-    desiredUrbanArea: boolean;
+type FormProps = {
     urbanAreas: any;
 }
 
-type MyState = {
-    homeCity: string;
-    desiredCity: string;
-    disabled: boolean;
-    // homeCityFound: boolean;
-    // desiredCityFound: boolean;
+type FormState = {
+    homeSlug: string;
+    desiredSlug: string;
 }
 
-class Form extends Component<MyProps, MyState> {
+class Form extends Component<FormProps, FormState> {
 
-    state: MyState = {
-        homeCity: '',
-        desiredCity: '',
-        disabled: true, 
+    state: FormState = {
+        homeSlug: '',
+        desiredSlug: '',
     }
-
-   
 
     handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
         const { name, value } = e.currentTarget;
@@ -37,60 +29,49 @@ class Form extends Component<MyProps, MyState> {
 
         if (name === 'homeCity') {
             const matchingHome = this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value)
-
-            if (matchingHome.fullName.length) {
-                this.setState({homeCity: matchingHome.fullName})
-            }
-        }
-
-        if (name === 'desiredCity') {
+            this.setState({ homeSlug: matchingHome === undefined ? '' : matchingHome.slug})
+        } else {
             const matchingAway = this.props.urbanAreas.find((item: { href: string, fullName: string }) => item.fullName === value) 
-              
-            if(matchingAway.fullName.length ) {
-                this.setState({ desiredCity: matchingAway.fullName })
-                   
-            }
+            this.setState({ desiredSlug: matchingAway === undefined ? '' : matchingAway.slug})
         }
-
-
     }
-
 
     createDatalist = () => {
         const dropDown = this.props.urbanAreas.map((item: { href: string, fullName: string }) => <option key={item.href}>{item.fullName}</option>)
         return dropDown
     }
 
-    handleClick = () => {
-        this.props.handleCallback(this.state.homeCity, this.state.desiredCity)
+    handleErrorClick = () => {
+        if(!this.state.homeSlug && !this.state.desiredSlug) {
+            swal('Both city inputs are invalid', 'Please try again!', 'error')
+        } else if(!this.state.desiredSlug) {
+            swal('Desired city input is invalid', 'Please try again!', 'error')
+        } else {
+            swal('Starting city input is invalid', 'Please try again!', 'error')
+        }
     }
-
+    
     render() {
+        const searchButton = this.state.homeSlug && this.state.desiredSlug
+        ? <Link to={`/${this.state.homeSlug}+${this.state.desiredSlug}`} tabIndex={-1}><button className='search'>Search</button></Link>
+        : <Link to='/' tabIndex={-1}><button onClick={this.handleErrorClick} className='search'>Search </button></Link>
+
         return (
-            <div className="form">
-                <form>
+                <form className='form'>
                     <div className='input-container'>
                         <label>Starting City</label>
-                        <input type='search' list='listOne' autoComplete='off' name='homeCity' value={this.state.homeCity} placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} required />
+                        <input type='search' list='listOne' autoComplete='off' name='homeCity' placeholder='Enter your current city' onChange={(event) => this.handleChange(event)} />
                         <datalist id='listOne'>{this.createDatalist()}</datalist>
                     </div>
-                    {!this.props.homeUrbanArea && <h2>Please enter a valid city</h2>}
                     <div className='input-container'>
                         <label>Desired City</label>
-                        <input type='search' list='listTwo' autoComplete='off' name='desiredCity' value={this.state.desiredCity} placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} required />
+                        <input type='search' list='listTwo' autoComplete='off' name='desiredCity' placeholder='Enter your desired city' onChange={(event) => this.handleChange(event)} />
                         <datalist id='listTwo'>{this.createDatalist()}</datalist>
                     </div>
-                    {!this.props.desiredUrbanArea && <h2>Please enter a valid city</h2>}
-                    <Link to='/cities' tabIndex={-1}>
-                      {this.state.homeCity.length && this.state.desiredCity.length
-                        
-                      ? <button  onClick={() => this.handleClick()} className='search'>Search</button>
-                      : <button disabled={this.state.disabled} onClick={() => this.handleClick()} className='search'>Search</button>
-                      }
-                    </Link>
+                      {searchButton}
                 </form>
-            </div>
         )
+         
     }
 }
 

@@ -8,15 +8,23 @@
 
 .header {
   align-items: center;
-  border-bottom: solid 10px #FFC93C;
+  border-bottom: solid 1vh #FFC93C;
   display: flex;
   height: 10vh;
   justify-content: center;
   width: 100vw;
+  background-color: #86E5FF;
+ 
+  
 }
 
 .logo {
   color:#0081C9;
-  font-size: 30px;
+  font-size: 5vh;
+  font-weight:600;
+  text-decoration: none;
+}
+.logo:hover {
+  cursor: pointer;
 }
 

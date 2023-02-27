@@ -9,12 +9,12 @@
 .card-front {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
+    justify-content: space-between;
     position: relative;
     width: 100%;
-    height: 100%;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
+    height: 30%;
+    align-items: center;
+}
+.card-front >h2 {
+ font-size: x-large;
 }
