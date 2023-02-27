@@ -4,21 +4,20 @@ import FrontCard from "./FrontCard";
 import BackCard from "./BackCard";
 import { getSpecifiedInfo } from '../apicalls/allCitiesApiCall';
 
-type MyProps = {
-	urbanAreas: any;
+type CardProps = {
 	citySlug: string;
 }
 
-type MyState = {
-	cityImage: string,
+type CardState = {
+  cityImage: string,
 	cityScores: [],
 	cityName: string,
 	errorMessage: string
 }
 
-class Card extends Component<MyProps, MyState> {
+class Card extends Component <CardProps, CardState> {
 
-	state: MyState = {
+	state: CardState = {
 		cityImage: '',
 		cityScores: [],
 		cityName: '',
@@ -41,7 +40,7 @@ class Card extends Component<MyProps, MyState> {
 			})
 	}
 
-	getCityScores = (citySlug: string, endpoint: string) => {
+	storeCityScores = (citySlug: string, endpoint: string) => {
 		getSpecifiedInfo(citySlug, endpoint)
 			.then(data => {
 				const newScores = data.categories.reduce((acc: any, curr: any) => {
@@ -53,7 +52,7 @@ class Card extends Component<MyProps, MyState> {
 			})
 	}
 
-	getCityImages = (citySlug: string, endpoint: string) => {
+	storeCityImages = (citySlug: string, endpoint: string) => {
 		getSpecifiedInfo(citySlug, endpoint)
 			.then(data => {
 				const image = data.photos[0].image.web

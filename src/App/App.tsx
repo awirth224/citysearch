@@ -3,10 +3,10 @@ import './App.css';
 import Header from '../Header/Header'
 import Form from '../Form/Form'
 import { 
-  urbanFetch,
+  getUrbanAreas,
   getFullName,
 } from '../apicalls/allCitiesApiCall';
-import { Route , NavLink } from 'react-router-dom'; 
+import { Route , NavLink, Switch } from 'react-router-dom'; 
 import Card from '../Card/Card'
 
 type MyState = {
@@ -24,7 +24,7 @@ class App extends Component<{}, MyState> {
 
   componentDidMount(): void {
     const urbanData: any = [];
-    urbanFetch()
+    getUrbanAreas()
       .then(data => {
         data['_links']['ua:item'].forEach((city: {href: string, name: string}) => {
           getFullName(city.href)
@@ -45,22 +45,22 @@ class App extends Component<{}, MyState> {
     return (
       <main className='app'>
         <Header />
+
+        <Switch>
         <Route exact path='/' render ={ () => <Form urbanAreas={this.state.urbanAreas} /> } /> 
 
-        <Route exact path={`/:slugs`} render={({ match })=>{
+        <Route exact path={`/:slugs`} render={({ match })=> {
           let slugString: string = match.params.slugs
           const slugs: string[] = slugString.split("+")
 
           return(
             <div className='display-area'>
               <div className='cards-container'>
-                 <Card 
-                    citySlug={slugs[0]}
-                    urbanAreas={this.state.urbanAreas}
+                <Card 
+                  citySlug={slugs[0]}
                 />
                 <Card 
-                    citySlug={slugs[1]}
-                    urbanAreas={this.state.urbanAreas}
+                  citySlug={slugs[1]}
                 />
               </div>
               <div>
@@ -71,6 +71,7 @@ class App extends Component<{}, MyState> {
             </div>
           )
         }}/>
+        </Switch>
       </main>
     )
   }

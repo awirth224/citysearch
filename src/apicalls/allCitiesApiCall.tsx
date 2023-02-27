@@ -1,6 +1,6 @@
-import React from "react";
 
-const urbanFetch = () => {
+
+const getUrbanAreas = () => {
     return fetch('https://api.teleport.org/api/urban_areas/')
         .then(res => {
             if (!res.ok) {
@@ -31,4 +31,4 @@ const getSpecifiedInfo = (slug: string, endpoint?: string) => {
         })
 }
 
-export { urbanFetch, getFullName, getSpecifiedInfo };
+export { getUrbanAreas, getFullName, getSpecifiedInfo };
