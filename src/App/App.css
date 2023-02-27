@@ -6,8 +6,11 @@
 #E8F0F2 - gray
 */
 
-.App {
-  text-align: center;
+.app {
+  background-color: #E8F0F2;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .display-area {

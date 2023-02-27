@@ -11,3 +11,9 @@
   width: 40vw;
   background-color: white;
 }
+
+.error-image {
+  height: 100%;
+  object-fit: fill;
+  max-width: 100%;
+}

@@ -15,17 +15,12 @@ import {
 
 interface BackProps {
    cityInfo: any;
-//    clickBackButton: any;
-   //change to type function
 }
 
 
 const roundHalf = (num: number) => {
    return (Math.round(Number(((num/2)*100).toFixed(0))/50)*50)/100
  }
-
-//  const fillColor = "#ffc93c";
-
 
 interface BackProps {
     cityInfo: any;
@@ -36,25 +31,23 @@ const BackCard: FC<BackProps> = props => {
         fontSize: '4vh'
     }
     const fillColorArray = [
-    '#FF0D0D',
-    '#FF0D0D',
-    '#FF4E11',
-    '#FF4E11',
-    '#FF8E15',
-    '#FAB733',
-    '#ACB334',
-    '#ACB334',
-    '#69B34C',
-    '#69B34C',
- ];
+        '#FF0D0D',
+        '#FF0D0D',
+        '#FF4E11',
+        '#FF4E11',
+        '#FF8E15',
+        '#FAB733',
+        '#ACB334',
+        '#ACB334',
+        '#69B34C',
+        '#69B34C',
+    ];
     return (
         
             <section className="card-back" >
                 <section className="info-display">
                     <h2> Cost of living: </h2>
-                    {/* <div className="info-wrapper">{props.cityInfo['Cost of Living']}</div> */}
                     <Rating
-                        // size={50}
                         transition
                         allowFraction
                         iconsCount={5}
@@ -71,7 +64,6 @@ const BackCard: FC<BackProps> = props => {
                 </section>
                 <section className="info-display" >
                     <h2> Environmental Quality: </h2>
-                    {/* <div className="info-wrapper">{props.cityInfo['Environmental Quality']} </div> */}
                     <Rating
                         size={50}
                         transition
@@ -88,7 +80,6 @@ const BackCard: FC<BackProps> = props => {
                 </section>
                 <section className="info-display">
                     <h2> Safety: </h2>
-                    {/* <div className="info-wrapper"> {props.cityInfo.Safety} </div> */}
                     <Rating
                         size={50}
                         transition
@@ -105,7 +96,6 @@ const BackCard: FC<BackProps> = props => {
                 </section>
                 <section className="info-display">
                     <h2> Economy: </h2>
-                    {/* <div className="info-wrapper">{props.cityInfo.Economy}</div> */}
                     <Rating
                         size={50}
                         transition
@@ -122,7 +112,6 @@ const BackCard: FC<BackProps> = props => {
                 </section>
                 <section className="info-display">
                    <h2> Commute: </h2>
-                   {/* <div className="info-wrapper">{props.cityInfo.Commute} </div> */}
                    <Rating
                        size={50}
                        transition
@@ -138,7 +127,6 @@ const BackCard: FC<BackProps> = props => {
                </section>
                <section className="info-display">
                    <h2> Housing: </h2>
-                   {/* <div className="info-wrapper">{props.cityInfo.Housing}</div> */}
                    <Rating
                        size={50}
                        transition
@@ -155,7 +143,6 @@ const BackCard: FC<BackProps> = props => {
                </section>
                <section className="info-display">
                    <h2> Education: </h2>
-                   {/* <div className="info-wrapper"> {props.cityInfo.Education} </div> */}
                    <Rating
                        size={50}
                        transition
@@ -173,7 +160,6 @@ const BackCard: FC<BackProps> = props => {
                </section>
                <section className="info-display">
                    <h2> HealthCare: </h2>
-                   {/* <div className="info-wrapper">  {props.cityInfo.Healthcare} </div> */}
                    <Rating
                        size={50}
                        transition
@@ -188,7 +174,6 @@ const BackCard: FC<BackProps> = props => {
                        fillColorArray={fillColorArray}
                    />
                </section>
-               {/* <button onClick={() => props.clickBackButton()}>Back</button> */}
            </section>
       
    )
