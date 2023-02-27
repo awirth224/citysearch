@@ -12,61 +12,61 @@ type CardState = {
   cityImage: string,
 	cityScores: [],
 	cityName: string,
-	error: string
+	errorMessage: string
 }
 
 class Card extends Component <CardProps, CardState> {
 
-    state: CardState = {
-			cityImage: '',
-			cityScores: [],
-			cityName: '',
-			error: '',
-    }
+	state: CardState = {
+		cityImage: '',
+		cityScores: [],
+		cityName: '',
+		errorMessage: '',
+	}
 
 	componentDidMount(): void {
-		this.makeCityDetails(this.props.citySlug)
+		this.compileCityDetails(this.props.citySlug)
 	}
 
-	makeCityDetails = (citySlug: string) => {
-		this.storeCityScores(citySlug, 'scores')
-		this.storeCityImages(citySlug, 'images')
-		this.storeCityName(citySlug)
-	}
-
-	storeCityName = (citySlug: string) => {
+	compileCityDetails = (citySlug: string) => {
 		getSpecifiedInfo(citySlug)
-		.then(data => {
-			this.setState({ cityName: data['full_name'] })
-		})
+			.then(data => {
+				this.setState({ cityName: data['full_name'] })
+			})
+			.then(() => this.getCityScores(citySlug, 'scores'))
+			.then(() => this.getCityImages(citySlug, 'images'))
+			.catch(error => {
+				this.setState({ errorMessage: error })
+			})
 	}
 
 	storeCityScores = (citySlug: string, endpoint: string) => {
 		getSpecifiedInfo(citySlug, endpoint)
-		  .then(data => {
-			const newScores = data.categories.reduce((acc: any, curr: any) => {
-			  acc[curr.name] = curr.score_out_of_10
-			  return acc
-			}, {})
-			
-			this.setState({ cityScores: newScores })
-		  })
+			.then(data => {
+				const newScores = data.categories.reduce((acc: any, curr: any) => {
+					acc[curr.name] = curr.score_out_of_10
+					return acc
+				}, {})
+
+				this.setState({ cityScores: newScores })
+			})
 	}
 
 	storeCityImages = (citySlug: string, endpoint: string) => {
 		getSpecifiedInfo(citySlug, endpoint)
-		  .then(data => {
-			const image = data.photos[0].image.web
-			
-			this.setState({ cityImage: image })
-		  })
+			.then(data => {
+				const image = data.photos[0].image.web
+
+				this.setState({ cityImage: image })
+			})
 	}
 
 	render() {
 		return (
-			<section className="card-content" >
- 				<FrontCard cityName={this.state.cityName} cityImage={this.state.cityImage} />
-				<BackCard cityInfo={this.state.cityScores} />
+			<section className="card-content" id='flip-card' >
+				{!this.state.errorMessage && <FrontCard cityName={this.state.cityName} cityImage={this.state.cityImage} />}
+				{!this.state.errorMessage && <BackCard cityInfo={this.state.cityScores} />}
+				{this.state.errorMessage && <img className="error-image" src='https://i.imgflip.com/3811ub.jpg' alt='error message' />}
 			</section>
 		)
 	}
