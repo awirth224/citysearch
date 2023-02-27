@@ -1,7 +1,7 @@
 /* 
-#0081C9 
+#0081C9- dark blue 
 #5BC0F8
-#86E5FF
+#86E5FF-light blue
 #FFC93C - yellow
 #E8F0F2 - gray
 */
@@ -11,10 +11,11 @@
 }
 
 .display-area {
-  border-top: solid 10px #5BC0F8;
+  border-top: solid 1vh #FFC93C;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  background-color: #E8F0F2;
 }
 
 .cards-container {
