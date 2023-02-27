@@ -48,7 +48,7 @@ const BackCard: FC<BackProps> = props => {
     '#69B34C',
  ];
     return (
-        <div>
+        
             <section className="card-back" >
                 <section className="info-display">
                     <h2> Cost of living: </h2>
@@ -190,7 +190,7 @@ const BackCard: FC<BackProps> = props => {
                </section>
                {/* <button onClick={() => props.clickBackButton()}>Back</button> */}
            </section>
-       </div>
+      
    )
 }
 

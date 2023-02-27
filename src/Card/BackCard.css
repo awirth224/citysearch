@@ -6,7 +6,8 @@
     justify-content: space-between;
     margin: 0% 0% 1% 0%;
     padding: 0% 2%;
-    width: 90%;
+    width: 70%;
+   
     
 }
 
@@ -29,6 +30,7 @@
 
 h2 {
     color: #5BC0F8;
-    font-size: 14px;
+    font-size: 1rem;
+    margin-left:5%;
 }
 
