@@ -26,20 +26,16 @@ class Card extends Component<MyProps, MyState> {
 	}
 
 	componentDidMount(): void {
-		this.getCityDeets(this.props.citySlug)
+		this.compileCityDetails(this.props.citySlug)
 	}
 
-	getCityDeets = (citySlug: string) => {
-		this.getCityScores(citySlug, 'scores')
-		this.getCityImages(citySlug, 'images')
-		this.getCityName(citySlug)
-	}
-
-	getCityName = (citySlug: string) => {
+	compileCityDetails = (citySlug: string) => {
 		getSpecifiedInfo(citySlug)
 			.then(data => {
 				this.setState({ cityName: data['full_name'] })
 			})
+			.then(() => this.getCityScores(citySlug, 'scores'))
+			.then(() => this.getCityImages(citySlug, 'images'))
 			.catch(error => {
 				this.setState({ errorMessage: error })
 			})
@@ -71,7 +67,7 @@ class Card extends Component<MyProps, MyState> {
 			<section className="card-content" id='flip-card' >
 				{!this.state.errorMessage && <FrontCard cityName={this.state.cityName} cityImage={this.state.cityImage} />}
 				{!this.state.errorMessage && <BackCard cityInfo={this.state.cityScores} />}
-				{this.state.errorMessage && <img src='https://i.imgflip.com/3811ub.jpg' alt='error message' />}
+				{this.state.errorMessage && <img className="error-image" src='https://i.imgflip.com/3811ub.jpg' alt='error message' />}
 			</section>
 		)
 	}
