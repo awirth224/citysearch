@@ -10,8 +10,9 @@ const getFullName = (url: string) => {
     .then(res => res.json())
 }
 
-const getSpecifiedInfo = (url:string , endpoint: string) => {
-    return fetch(`${url}${endpoint}`)
+const getSpecifiedInfo = (slug:string , endpoint?: string) => {
+    const endPoint: string = endpoint || ''
+    return fetch(`https://api.teleport.org/api/urban_areas/slug:${slug}/${endPoint}`)
     .then(response => response.json())
 }
 
