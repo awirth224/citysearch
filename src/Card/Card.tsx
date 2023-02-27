@@ -1,23 +1,76 @@
-import React from "react";
+import React, { Component } from "react";
 import './Card.css';
 import FrontCard from "./FrontCard";
 import BackCard from "./BackCard";
+import { getSpecifiedInfo } from '../apicalls/allCitiesApiCall';
 
-type CardProps = {
-	cityInfo: any;
-	cityName: string;
-	cityPopulation: number;
-	cityImage: string;
+type MyProps = {
+    urbanAreas: any;
+	citySlug: string;
 }
 
-const Card: React.FC<CardProps> = ({ cityInfo, cityName, cityPopulation, cityImage }) => {
+type MyState = {
+    cityImage: string,
+	cityScores: [],
+	cityName: string,
+	error: string
+}
 
-	return (
-		<section className="card-content" id='flip-card' >
-			<FrontCard cityName={cityName} cityPopulation={cityPopulation} cityImage={cityImage} />
-			<BackCard cityInfo={cityInfo} />
-		</section>
-	)
+class Card extends Component<MyProps, MyState> {
+
+    state: MyState = {
+        cityImage: '',
+		cityScores: [],
+		cityName: '',
+		error: '',
+    }
+
+	componentDidMount(): void {
+		this.getCityDeets(this.props.citySlug)
+	}
+
+	getCityDeets = (citySlug: string) => {
+		this.getCityScores(citySlug, 'scores')
+		this.getCityImages(citySlug, 'images')
+		this.getCityName(citySlug)
+	}
+
+	getCityName = (citySlug: string) => {
+		getSpecifiedInfo(citySlug)
+		.then(data => {
+			this.setState({ cityName: data['full_name'] })
+		})
+	}
+
+	getCityScores = (citySlug: string, endpoint: string) => {
+		getSpecifiedInfo(citySlug, endpoint)
+		  .then(data => {
+			const newScores = data.categories.reduce((acc: any, curr: any) => {
+			  acc[curr.name] = curr.score_out_of_10
+			  return acc
+			}, {})
+			
+			this.setState({ cityScores: newScores })
+		  })
+	}
+
+	getCityImages = (citySlug: string, endpoint: string) => {
+		getSpecifiedInfo(citySlug, endpoint)
+		  .then(data => {
+			const image = data.photos[0].image.web
+			
+			this.setState({ cityImage: image })
+		  })
+	}
+
+	render() {
+		return (
+			<section className="card-content" id='flip-card' >
+ 				<FrontCard cityName={this.state.cityName} cityImage={this.state.cityImage} />
+				<BackCard cityInfo={this.state.cityScores} />
+			</section>
+		)
+	}
 }
 
 export default Card
