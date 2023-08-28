@@ -1,4 +1,4 @@
-describe('City Search site', () => {
+exampledescribe('City Search site', () => {
 
   it('Should display a title', () => {
     cy.intercept('GET', 'https://api.teleport.org/api/urban_areas/', { fixture: 'example.json' })
