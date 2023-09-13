@@ -3,23 +3,22 @@
   align-self: center;
   margin-top: 15vh;
   justify-self: center;
-  border: solid 0.5vh #5BC0F8;
+  border: solid 0.5vh #5bc0f8;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around;
-  height: 40vh;
-  width: 25vw;
+  height: 45vh;
+  width: 35vw;
   background-color: white;
   border-radius: 5%;
 }
 
-.input-container{
+.input-container {
   display: flex;
   flex-direction: column;
   height: 10vh;
   justify-content: center;
-
 }
 
 input {
@@ -29,15 +28,43 @@ input {
 }
 
 .search {
-  background-color: #0081C9;
+  background-color: #0081c9;
   border: none;
   color: white;
   height: 5vh;
-  margin: 5% 0% 0% 25%;
-  width: 10vw;
+  margin: 5% 0% 0% 16%;
+  width: 15vw;
+  border-radius: 6px;
 }
 
 .search:hover {
   cursor: pointer;
   transform: scale(1.06);
+}
+/* everything under 650px */
+@media screen and (max-width: 770px) {
+  .form {
+    align-content: center;
+    align-self: center;
+    margin-top: 15vh;
+    justify-self: center;
+    border: solid 0.5vh #5bc0f8;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    height: 55vh;
+    width: 35vw;
+    background-color: white;
+    border-radius: 3%;
+  }
+  input {
+    height: 5vh;
+    opacity: 80%;
+    width: 24vw;
+    font-size: 14px;
+  }
+  .search {
+    margin: 3% 20% 0% 20%;
+  }
 }
