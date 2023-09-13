@@ -7,38 +7,55 @@
 */
 
 .app {
-  background-color: #E8F0F2;
+  background-color: #e8f0f2;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .display-area {
-  border-top: solid 1vh #FFC93C;
+  border-top: solid 1vh #ffc93c;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: #E8F0F2;
+  background-color: #e8f0f2;
 }
 
 .cards-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 4.0rem;
+  gap: 4rem;
   justify-content: center;
 }
 
 .home-btn {
-  background-color: #0081C9;
+  background-color: #0081c9;
+  border-radius: 6px;
   border: none;
   color: white;
   height: 5vh;
-  margin: 1% 0% 3% 45%;
+  margin: 2% 0% 3% 45%;
   width: 8vw;
 }
 
 .home-btn:hover {
   cursor: pointer;
-  transform: scale(1.06);
+  transform: scale(1.1);
+}
+/* everything under 730px */
+@media screen and (max-width: 1068px) and (min-width: 770px) {
+  .cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* Iphone view port  */
+@media screen and (max-width: 770px) {
+  .cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
