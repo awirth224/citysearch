@@ -35,8 +35,9 @@
   border: none;
   color: white;
   height: 5vh;
-  margin: 2% 0% 3% 45%;
-  width: 8vw;
+  margin: 2% 0% 2% 42%;
+  width: 20vw;
+  font-size: x-large;
 }
 
 .home-btn:hover {
@@ -50,6 +51,16 @@
     flex-direction: column;
     align-items: center;
   }
+  .home-btn {
+    background-color: #0081c9;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    height: 5vh;
+    margin: 2% 0% 0% 42%;
+    width: 20vw;
+    font-size: x-large;
+  }
 }
 /* Iphone view port  */
 @media screen and (max-width: 770px) {
@@ -57,5 +68,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .home-btn {
+    background-color: #0081c9;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    height: 5vh;
+    margin: 3% 0% 5% 42%;
+    width: 20vw;
+    font-size: x-large;
   }
 }
