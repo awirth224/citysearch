@@ -32,32 +32,23 @@ h2 {
   margin-left: 5%;
 }
 
-/* everything under 730px */
 @media screen and (max-width: 1068px) and (min-width: 770px) {
   .info-display {
-    align-items: center;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0% 0% 1% 0%;
     padding: 0% 1%;
-    width: 80%;
+    width: 85%;
     height: 9%;
   }
 }
-/* Iphone view port  */
+
 @media screen and (max-width: 770px) {
   .info-display {
-    align-items: center;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     margin: 0% 0% 1% 0%;
     padding: 0% 1%;
-    width: 80%;
-    height: 12%;
+    width: 85%;
+    height: 10%;
   }
   .info-display h2 {
     font-size: 14px;

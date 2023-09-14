@@ -16,12 +16,12 @@
   align-items: center;
 }
 .card-front > h2 {
-  font-size: x-large;
+  margin-top: 1.5%;
+  font-size: 1.5rem;
 }
 
-/* everything under 730px */
-@media screen and (max-width: 1068px) and (min-width: 770px) {
-}
-/* Iphone view port  */
 @media screen and (max-width: 770px) {
+  .card-front > h2 {
+    font-size: 1.4rem;
+  }
 }

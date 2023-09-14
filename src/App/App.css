@@ -5,7 +5,9 @@
 #FFC93C - yellow
 #E8F0F2 - gray
 */
-
+* {
+  scroll-behavior: smooth;
+}
 .app {
   background-color: #e8f0f2;
   height: 100vh;
@@ -70,13 +72,7 @@
     align-items: center;
   }
   .home-btn {
-    background-color: #0081c9;
-    border-radius: 6px;
-    border: none;
-    color: white;
-    height: 5vh;
     margin: 3% 0% 5% 42%;
-    width: 20vw;
     font-size: x-large;
   }
 }
