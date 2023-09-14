@@ -1,34 +1,58 @@
 .info-display {
-    align-items: center;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0% 0% 1% 0%;
-    padding: 0% 2%;
-    width: 70%;
+  align-items: center;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0% 0% 1% 0%;
+  padding: 0% 2%;
+  width: 70%;
 }
 
 .info-wrapper {
-    display: flex;
-    font-size: medium;
-    justify-content: flex-end;
-    padding: 1.5%;
-    width: 90%;
+  display: flex;
+  font-size: medium;
+  justify-content: flex-end;
+  padding: 1.5%;
+  width: 90%;
 }
 
 .card-back {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height:70%; 
-    justify-content: space-evenly;
-    width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 h2 {
-    color: #5BC0F8;
-    font-size: 1rem;
-    margin-left:5%;
+  color: #5bc0f8;
+  font-size: 1rem;
+  margin-left: 5%;
 }
 
+@media screen and (max-width: 1068px) and (min-width: 770px) {
+  .info-display {
+    padding: 0% 1%;
+    width: 85%;
+    height: 9%;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .info-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0% 0% 1% 0%;
+    padding: 0% 1%;
+    width: 85%;
+    height: 10%;
+  }
+  .info-display h2 {
+    font-size: 14px;
+    font-style: bold;
+    margin-top: 2%;
+  }
+}
